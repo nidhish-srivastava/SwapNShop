@@ -21,13 +21,13 @@ export async function GET(req:Request){
 
 export async function POST(req:Request){
   try {
-    const {title,blocks,author} = await req.json()
-    const post = await PostModel.create({
-      title : title,
-      blocks : blocks.blocks,
-      author : author
-    })
-    return new Response(JSON.stringify(post))
+    // const {title,blocks,author} = await req.json()
+    // const post = await PostModel.create({
+    //   title : title,
+    //   blocks : blocks.blocks,
+    //   author : author
+    // })
+    // return new Response(JSON.stringify(post))
   } catch (error) {
     
   }
