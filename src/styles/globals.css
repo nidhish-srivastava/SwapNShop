@@ -1,63 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  /* color: rgb(var(--foreground-rgb)); */
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
-} 
-
-input{
-  background: transparent;
-  /* border: 1px solid white; */
-}
-
-/* Navbar Styles */
+/* 
 .navbar {
-  /* Your desktop navbar styles */
-  /* Example styles, you can customize them further */
   display: flex;
   align-items: center;
 }
 
 .navbar a {
-  /* Your link styles */
-  /* Example styles */
   text-decoration: none;
   color: #333;
 }
 
-/* Hamburger Styles */
 .hamburger {
-  /* Your hamburger icon styles */
-  /* Example styles */
   cursor: pointer;
-  display: none; /* Hide by default on desktop */
+  display: none;
 }
 
-/* Media query for mobile view */
 @media (max-width: 600px) {
   .navbar {
-    /* Styles for mobile navbar */
-    /* Example styles, you can customize them further */
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -82,7 +44,6 @@ input{
   }
 
   .hamburger {
-    /* Example styles */
     display: block;
     position: absolute;
     top: 1rem;
@@ -90,4 +51,4 @@ input{
     z-index: 2000;
     color: #fff;
   }
-}
+}  */

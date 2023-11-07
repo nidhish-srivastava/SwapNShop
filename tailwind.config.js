@@ -8,12 +8,19 @@ module.exports = {
     './src/**/*.{ts,tsx}',
 	],
   theme: {
+    screens: {
+      'sm': '500px',
+      'customsm' : {'max' : "500px"},
+      'customsm2' : {'max' : "600px"},
+      'custommd' : {'max' : "768px"},
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
     },
     extend: {
       colors: {

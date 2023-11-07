@@ -13,18 +13,6 @@ const nextConfig = {
     images: {
       remotePatterns: [
         {
-          protocol: "https",
-          hostname: "uploadthing.com",
-        },
-        {
-          protocol: "https",
-          hostname: "placehold.co",
-        },
-        // {
-        //   protocol :"https",
-        //   hostname : "avatars.githubusercontent.com"
-        // },
-        {
           protocol : "https",
           hostname :"lh3.googleusercontent.com"
         }
