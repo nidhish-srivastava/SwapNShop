@@ -69,7 +69,7 @@ export default function NavMenu() {
             <Link href="/chat">
               <MessageCircle />
             </Link>
-            <Link href="/sell">
+            <Link href="/post">
               <h2 className=" text-xl ">Sell</h2>
             </Link>
             <div>
