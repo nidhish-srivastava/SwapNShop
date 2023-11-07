@@ -1,0 +1,3 @@
+I want to create user profiles(i have dont the authentication using next auth)
+
+When user registess for the first time,i want to make a api call for creating a user
