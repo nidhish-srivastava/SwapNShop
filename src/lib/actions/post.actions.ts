@@ -3,11 +3,9 @@
 import PostModel from "../models/post.model"
 import { connectToDB } from "../mongoose"
 
-export async function createPost(title : String){
+export async function createPost(){
     try {
         connectToDB()
-        const newPost = new PostModel({title : title})
-       return newPost.save()
     } catch (error) {
         
     }
