@@ -1,18 +1,44 @@
+"use client"
 import { CarFront,Bike,Smartphone,Home,Laptop2,Armchair,Dog,Book,Shirt } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+type categories = {
+  name : string
+  icons : React.ReactNode
+  selected : false | true
+}
 
 const categories = [
-  { name: "Cars", icons: <CarFront /> },
-  { name: "Bikes", icons: <Bike /> },
-  { name: "Mobiles", icons:<Smartphone /> },
-  { name: "Properties",icons : <Home />},
-  { name: "Electronic and Appliances",icons : <Laptop2 /> },
-  { name: "Furniture",icons : <Armchair /> },
-  { name: "Pets",icons : <Dog /> },
-  { name: "Books,Sports and Hobbies",icons : <Book /> },
-  { name: "Fashion",icons : <Shirt /> },
-];
+  { name: "Cars",icons: <CarFront />, selected : false },
+  { name: "Bikes", icons: <Bike />, selected : false },
+  { name: "Mobiles", icons:<Smartphone />, selected : false },
+  { name: "Properties",icons : <Home />, selected : false},
+  { name: "Electronic and Appliances",icons : <Laptop2 />, selected : false },
+  { name: "Furniture",icons : <Armchair />, selected : false },
+  { name: "Pets",icons : <Dog />, selected : false },
+  { name: "Books,Sports and Hobbies",icons : <Book />, selected : false },
+  { name: "Fashion",icons : <Shirt />, selected : false },
+]
 
 function Sell() {
+  const [category,setCategory] = useState(categories)
+  const router = useRouter()
+  const clickOnCategoryHandler = (name:string | undefined) =>{
+    setCategory(
+      (e)=>{
+        e.map(ele=>{
+          if(ele.name==name) {
+            router.push(`/post/${name}`)
+            return {...e,selected : true}
+          }
+        })
+        return e
+      }
+    )
+  }
+  
   return (
     <>
       <main className=" md:w-3/5 sm:w-4/5 sm:m-auto">
@@ -21,7 +47,7 @@ function Sell() {
         </h2>
         <div className=" flex flex-col mt-5 cursor-pointer">
           {categories.map((e, i) => (
-            <div key={i} className="border p-2 flex gap-3">
+            <div key={i} className="border p-2 flex gap-3" onClick={()=>clickOnCategoryHandler(e.name)} >
               <span aria-hidden="true">{e.icons}</span>
               <span>{e.name}</span>
             </div>
