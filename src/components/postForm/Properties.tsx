@@ -1,5 +1,8 @@
 import React from "react";
 import FieldButtonGroup from "./FieldButtonGroup";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import DropDown from "./DropDown";
 
 export const fieldButtons = [
   {
@@ -16,11 +19,11 @@ export const fieldButtons = [
   },
   {
     label:"Bedrooms",
-    buttons : [1,2,3,4]
+    buttons : [1,2,3,4,"4+"]
   },
   {
     label : "Bathrooms",
-    buttons : [1,2,3,4]
+    buttons : [1,2,3,4,"4+"]
   },
   {
     label : "Furnishing",
@@ -33,7 +36,11 @@ export const fieldButtons = [
   {
     label : "Listed By",
     buttons : ["Builder","Dealer","Owner"]
-  }
+  },
+  {
+    label:  "Car Parking",
+    buttons : [0,1,2,3,"3+"]
+  },
 ];
 
 function Properties() {
@@ -45,6 +52,20 @@ function Properties() {
       <FieldButtonGroup label="Furnishing"/>
       <FieldButtonGroup label="Construction Status"/>
       <FieldButtonGroup label="Listed By"/>
+      <Label>Super Builtup area (ft<sup>2</sup>)*</Label>
+      <Input type="number"/>
+      <Label>Carpet Area (ft<sup>2</sup>)*</Label>
+      <Input type="number"/>
+      <Label>Maintenance(Monthly)</Label>
+      <Input type="number"/>
+      <Label>Total Floors</Label>
+      <Input type="number"/>
+      <Label>Floor No</Label>
+      <Input type="number"/>
+      <FieldButtonGroup label="Car Parking"/>
+      <DropDown label="Facing"/>
+      <Label>Project Name</Label>
+      <Input type="text"/>
     </>
   );
 }

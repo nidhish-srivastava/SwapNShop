@@ -8,7 +8,7 @@ import { base64 } from "@/lib/base64";
 import Cars from "@/components/postForm/Cars";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea"
-import Brand from "@/components/postForm/Brand";
+import DropDown from "@/components/postForm/DropDown";
 import Bikes from "@/components/postForm/Bikes";
 import Properties from "@/components/postForm/Properties";
 
@@ -50,7 +50,7 @@ function page() {
       )
       case "Mobiles" : 
       return(
-      <Brand/>
+      <DropDown label="Mobile"/>
       )
       case "Properties" : 
       return(
