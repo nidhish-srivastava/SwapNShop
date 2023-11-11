@@ -41,6 +41,7 @@ function Sell() {
   
   return (
     <>
+    <Link href={`/`} className="text-[1.4rem] p-4">Home</Link>
       <main className=" md:w-3/5 sm:w-4/5 sm:m-auto">
         <h2 className="mt-4 customsm2:mt-8 text-center text-[1.1rem] font-medium">
           Choose A Category
