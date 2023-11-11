@@ -1,12 +1,12 @@
 import React from 'react'
-import Brand from './Brand'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
+import DropDowns from './DropDown'
 
 function Bikes() {
   return (
     <>
-    <Brand/>
+    <DropDowns label='Bike' />
     <Label htmlFor="year">Year*</Label>
     <Input type="number" />
     <div>
