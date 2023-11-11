@@ -15,14 +15,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Input } from "@/components/ui/input";
+import { usePathname } from "next/navigation";
 
 
 export default function NavMenu() {
+  const pathname = usePathname()
+    let show = pathname.split('/').includes("post")
   const { data: session } = useSession();
   const src = session?.user?.image as string;
 
   return (
-    <div>
+    <div className={show ? "hidden" : ""}>
       <ul className="flex items-center  justify-between p-4 md:py-4 md:px-12">
         <Link href="/">
           <span>LOGO</span>
