@@ -5,6 +5,12 @@ import React, { useState } from "react";
 import { useToast } from "@/components/ui/use-toast"
 import Image from "next/image";
 import { base64 } from "@/lib/base64";
+import Cars from "@/components/postForm/Cars";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea"
+import Brand from "@/components/postForm/Brand";
+import Bikes from "@/components/postForm/Bikes";
+import Properties from "@/components/postForm/Properties";
 
 type images = {
   picture : string
@@ -30,10 +36,26 @@ function page() {
   const [userImg5,setUserImg5] = useState(base64)
   // const [pictureLoading,setPictureLoading] = useState(false)
   let category = params.category
-  // console.log(params.category);
+  const decodedCategory = decodeURIComponent(category as string);
+
   const categoryTypeRender = () =>{
-    if(category=="Fashion"){
-      return <h3>Fashion</h3>      
+    switch(decodedCategory){
+      case "Cars" : 
+      return(
+        <Cars/>
+      )
+      case "Bikes" : 
+      return(
+        <Bikes/>
+      )
+      case "Mobiles" : 
+      return(
+      <Brand/>
+      )
+      case "Properties" : 
+      return(
+        <Properties/>
+      )
     }
   }
   const imageUpload = (setUserImg:any) =>{
@@ -59,28 +81,27 @@ function page() {
   return (
     <div>
       <h2>Post Your AD</h2>
-      <h3>Selected Category : {params.category}</h3>
+      <h3>Selected Category : {decodedCategory}</h3>
       <Link href={`/post`}>
         <span>Change</span>
       </Link>
+      <br />
       {
         categoryTypeRender()
       }
       <hr />
       <label htmlFor="Ad title">Ad Title*</label>
-      <textarea className="border"  name="" id="Ad title" cols={30} rows={10}/>
+      <Textarea className="h-[3rem] resize-none w-[20%]"  name="" id="Ad title"/>
       <label htmlFor="Description">description*</label>
-      <textarea className="border" name="" id="Description" cols={30} rows={10}/>
+      <Textarea className="h-[3rem] resize-none w-[20%]" name="" id="Description"/>
       <hr />
       <label htmlFor="price">price*</label>
       <div>
       &#8377;
-      <input type="text" id="price" className="border" />
+      <Input type="number" min={0} id="price" className="border" />
       </div>
       <hr />
       <label htmlFor="photos">Upload upto 5 photos</label>
-      <button onClick={()=>console.log(imagesArray)
-      }>Check</button>
       <div className=" grid grid-cols-3">
         <div onClick={()=>imageUpload(setUserImg)}>
         <Image

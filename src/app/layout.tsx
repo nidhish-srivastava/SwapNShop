@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Navbar from '@/components/shared/Navbar'
+import Navbar from '@/components/Navbar'
 import { getServerSession } from 'next-auth'
 import SessionProvider  from '@/lib/SessionProvider'
 import { Toaster } from "@/components/ui/toaster"
