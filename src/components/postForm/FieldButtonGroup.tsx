@@ -1,7 +1,7 @@
 import React from 'react'
 import { Label } from '../ui/label'
 import { Button } from '../ui/button'
-import { fieldButtons } from './Properties'
+import { fieldButtons } from '@/lib/utils'
 
 type props = {
     label : string
