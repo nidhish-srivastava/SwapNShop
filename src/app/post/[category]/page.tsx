@@ -15,6 +15,8 @@ import Properties from "@/components/postForm/Properties";
 import { Roboto } from "next/font/google";
 import { Label } from "@/components/ui/label";
 const roboto = Roboto({ weight: "500", subsets: ["latin"] });
+import { states } from "../../../lib/statesdistricts.json";
+import { Button } from "@/components/ui/button";
 
 type images = {
   picture: string;
@@ -32,6 +34,7 @@ const images = [
 function page() {
   const params = useParams();
   const { toast } = useToast();
+  const [stateIndex, setStateIndex] = useState(0);
   const [imagesArray, setImagesArray] = useState(images);
   const [userImg, setUserImg] = useState(base64);
   const [userImg2, setUserImg2] = useState(base64);
@@ -83,7 +86,7 @@ function page() {
           Post Your AD
         </h1>
       </header>
-      <main className="sm:w-3/5 mx-auto">
+      <main className="sm:w-3/5 mx-auto pb-8">
         <div className="py-4">
           <h2 className={`post-form-heading px-4 p-2 ${roboto.className}`}>
             SELECTED CATEGORY{" "}
@@ -105,11 +108,7 @@ function page() {
           </h2>
           {categoryTypeRender()}
           <Label htmlFor="Ad title">Ad Title*</Label>
-          <Input
-            className="h-[3rem] resize-none"
-            name=""
-            id="Ad title"
-          />
+          <Input className="h-[3rem] resize-none" name="" id="Ad title" />
           <Label htmlFor="Description">Description*</Label>
           <Textarea
             className="h-[3rem] resize-none "
@@ -122,56 +121,57 @@ function page() {
           </h2>
           <Label htmlFor="price">Price*</Label>
           <div className="border border-black flex">
-            <span className="p-2">
-            &#8377;
-            </span>
+            <span className="p-2">&#8377;</span>
             <Input type="number" min={0} id="price" className="border-none" />
           </div>
         </div>
         <hr />
-        <h2 className={`post-form-heading p-4 ${roboto.className}`}>Upload upto 5 photos</h2>
-        <div className="grid grid-cols-3 max-w-[90%] mx-auto place-items-center">
-          <div className="" onClick={() => imageUpload(setUserImg)}>
-            <Image
-              src={userImg}
-              width={100}
-              height={100}
-              alt="Picture"
-            />
+        <div>
+          <h2 className={`post-form-heading p-4 ${roboto.className}`}>
+            UPLOAD upto 5 photos
+          </h2>
+          <div className="grid grid-cols-3 max-w-[90%] mx-auto place-items-center">
+            <div className="" onClick={() => imageUpload(setUserImg)}>
+              <Image src={userImg} width={100} height={100} alt="Picture" />
+            </div>
+            <div onClick={() => imageUpload(setUserImg2)}>
+              <Image src={userImg2} width={100} height={100} alt="Picture" />
+            </div>
+            <div onClick={() => imageUpload(setUserImg3)}>
+              <Image src={userImg3} width={100} height={100} alt="Picture" />
+            </div>
+            <div onClick={() => imageUpload(setUserImg4)}>
+              <Image src={userImg4} width={100} height={100} alt="Picture" />
+            </div>
+            <div onClick={() => imageUpload(setUserImg5)}>
+              <Image src={userImg5} width={100} height={100} alt="Picture" />
+            </div>
           </div>
-          <div onClick={() => imageUpload(setUserImg2)}>
-            <Image
-              src={userImg2}
-              width={100}
-              height={100}
-              alt="Picture"
-            />
-          </div>
-          <div onClick={() => imageUpload(setUserImg3)}>
-            <Image
-              src={userImg3}
-              width={100}
-              height={100}
-              alt="Picture"
-            />
-          </div>
-          <div onClick={() => imageUpload(setUserImg4)}>
-            <Image
-              src={userImg4}
-              width={100}
-              height={100}
-              alt="Picture"
-            />
-          </div>
-          <div onClick={() => imageUpload(setUserImg5)}>
-            <Image
-              src={userImg5}
-              width={100}
-              height={100}
-              alt="Picture"
-            />
-          </div>
-          {/* {imagesArray.map((imgObj,index)=>(
+        </div>
+        <hr />
+        <div className="px-2 pb-6">
+        <h2 className={`post-form-heading p-4 ${roboto.className}`}>
+            CONFIRM LOCATION
+          </h2>
+          <div className="my-4">
+          <Label className="block py-1 px-4 text-[.9rem]" id="state">State*</Label>
+          <select id="state" className="border border-slate-800 p-2 ml-4" onChange={e=>setStateIndex(+e.target.value)} value={stateIndex}>
+            {states.map((e,i) => (
+              <option value={i}>{e.state}</option>
+              ))}
+          </select>
+           </div>
+           <div>
+          <Label className="block py-1 px-4 text-[.9rem]" id="city">City*</Label>
+          <select className="border ml-4 p-2 border-slate-800">
+            {states[stateIndex]?.districts.map((e)=>(
+              <option>{e}</option>
+              ))}
+          </select>
+              </div>
+              </div>
+              <Button className=" block mx-auto bg-blue-500 text-white text-xl">Post</Button>
+        {/* {imagesArray.map((imgObj,index)=>(
         <div key={Math.random().toString()} onClick={()=>imageUpload(index)}>
         <Image
         src={imgObj.picture}
@@ -181,7 +181,6 @@ function page() {
         />
         </div>
       ))} */}
-        </div>
       </main>
     </>
   );

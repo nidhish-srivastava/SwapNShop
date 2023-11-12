@@ -1,5 +1,5 @@
-// "use client"
-// import { useEffect, useState } from "react"
+"use client"
+import { useEffect } from "react"
 // import { fetchAllPosts } from "@/lib/actions/post.actions";
 
 // export default function Home() {
@@ -54,6 +54,23 @@
 
 
 function Page() {
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // Handle successful position retrieval
+          const { latitude, longitude } = position.coords;
+          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+        },
+        (error) => {
+          // Handle error
+          console.error(`Error getting location: ${error.message}`);
+        }
+      );
+    }
+  }, []); 
+  
   return (
     <div></div>
   )
