@@ -8,10 +8,10 @@ function Bikes() {
     <>
     <DropDowns label='Bike' />
     <Label htmlFor="year">Year*</Label>
-    <Input type="number" />
+    <Input type="number" min={0} />
     <div>
     <Label htmlFor="KM Driven">KM Driven*</Label>
-    <Input type="number" />
+    <Input type="number" min={0} />
   </div>
     </>
   )

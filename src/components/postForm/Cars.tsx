@@ -6,18 +6,14 @@ import FieldButtonGroup from './FieldButtonGroup'
 function Cars() {
   return (
     <>
-  
     <Label htmlFor="year">Year*</Label>
     <Input type="number" />
-    <div>
-    </div>
     <div>
   <FieldButtonGroup label='Fuel'/>
     </div>
     <div>
   <FieldButtonGroup label='Transmission' />
     </div>
-
   <div>
     <Label htmlFor="KM Driven">KM Driven*</Label>
     <Input type="number" />
