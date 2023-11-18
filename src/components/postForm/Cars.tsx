@@ -4,7 +4,6 @@ import { Input } from "../ui/input";
 import FieldButtonGroup from "./FieldButtonGroup";
 import { carSchema } from "@/lib/actions/post.actions";
 
-
 type carProps = {
   carsFormData: carSchema;
   setCarsFormData: React.Dispatch<React.SetStateAction<carSchema>>;

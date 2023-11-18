@@ -1,12 +1,5 @@
 import React from "react";
 import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { bikeSchema } from "@/lib/actions/post.actions";
 
 export const dropdown = [
@@ -69,7 +62,7 @@ type props = {
 };
 
 
-function DropDowns({ label,value,setValue,setMobileBrandValue }: props) {
+function  DropDowns({ label,value,setValue,setMobileBrandValue }: props) {
   const changeHandler = (e:React.ChangeEvent<HTMLSelectElement | undefined>) =>{
     if(label=="Bike"){
       setValue?.((prev) => ({ ...prev, "brand": e.target.value }));
@@ -77,7 +70,6 @@ function DropDowns({ label,value,setValue,setMobileBrandValue }: props) {
     if(label=="Mobile"){
       setMobileBrandValue?.((prev) => ({ ...prev, "brand": e.target.value }));
     }
-
   }
   return (
     <>

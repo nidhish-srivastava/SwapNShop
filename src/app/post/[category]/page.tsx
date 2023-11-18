@@ -2,10 +2,8 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useRef, useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
+import React, { useState } from "react";
 import Image from "next/image";
-import { base64 } from "@/lib/base64";
 import Cars from "@/components/postForm/Cars";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,33 +17,28 @@ import { states } from "../../../lib/statesdistricts.json";
 import { Button } from "@/components/ui/button";
 import {
   bikeCreatePost,
+  bikeSchema,
   carCreatePost,
+  carSchema,
   createPost,
   mobileCreatePost,
-  propertyCreatePost,
+  propertySchema,
 } from "@/lib/actions/post.actions";
 import uploadImage from "../../../upload.jpg";
 import { useSession } from "next-auth/react";
 
-type images = {
-  picture: string;
-  selected: boolean;
-};
-
 const images = [
-  { picture: base64, selected: false },
-  { picture: base64, selected: false },
-  { picture: base64, selected: false },
-  { picture: base64, selected: false },
-  { picture: base64, selected: false },
+  { picture: uploadImage, selected: false },
+  { picture: uploadImage, selected: false },
+  { picture: uploadImage, selected: false },
+  { picture: uploadImage, selected: false },
+  { picture: uploadImage, selected: false },
 ];
 
 function page() {
   const params = useParams();
-  const { toast } = useToast();
   const { data: session } = useSession();
   const [stateIndex, setStateIndex] = useState(0);
-  const [imagesArray, setImagesArray] = useState(images);
   const [userImg, setUserImg] = useState(uploadImage);
   const [userImg2, setUserImg2] = useState(uploadImage);
   const [userImg3, setUserImg3] = useState(uploadImage);
@@ -58,23 +51,37 @@ function page() {
     author: session?.user?.name,
     images: [],
   });
-  const [propertyFormData, setPropertyFormData] = useState({});
-  const [carsFormData, setCarsFormData] = useState({
+  const [carsFormData, setCarsFormData] = useState<carSchema>({
     year: 0,
     fuel: "",
     transmission: "",
     kmDriven: 0,
   });
-  const [bikesFormData, setBikesFormData] = useState({
+  const [bikesFormData, setBikesFormData] = useState<bikeSchema>({
     brand: "",
     year: 0,
     kmDriven: 0,
   });
-  const [mobileFormData, setMobileFormData] = useState({
+  const [mobileFormData, setMobileFormData] = useState<{brand:string}>({
     brand: "",
   });
+  const [propertiesFormData,setPropertiesFormData] = useState<propertySchema>({
+    type : "",
+    bedrooms : "" || 0,
+    bathrooms : "" || 0,
+    furnishing : "",
+    constructionStatus : "",
+    listedBy : "",
+    superBuiltUpArea : 0,
+    carpetArea : 0,
+    maintenance : 0,
+    totalFloors : 0,
+    floorNo : 0,
+    carParking : 0 || "",
+    facing : "",
+    projectName : ""
+  })
 
-  // const [pictureLoading,setPictureLoading] = useState(false)
   let category = params.category;
   const decodedCategory = decodeURIComponent(category as string);
 
@@ -91,7 +98,7 @@ function page() {
       case "Mobiles":
         return <DropDown label="Mobile" value={mobileFormData.brand} setMobileBrandValue={setMobileFormData}  />;
       case "Properties":
-        return <Properties />;
+        return <Properties propertiesFormData={propertiesFormData} setPropertiesFormData={setPropertiesFormData} />;
     }
   };
   const imageUpload = (setUserImg: any) => {
