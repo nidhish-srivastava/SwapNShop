@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { bikeSchema } from "@/lib/actions/post.actions";
 
 export const dropdown = [
   {
@@ -62,25 +63,33 @@ export const dropdown = [
 
 type props = {
   label: string;
+  value  ?: string 
+  setValue?: React.Dispatch<React.SetStateAction<bikeSchema>>
+  setMobileBrandValue ?: React.Dispatch<React.SetStateAction<{brand:string}>>
 };
 
-function DropDowns({ label }: props) {
+
+function DropDowns({ label,value,setValue,setMobileBrandValue }: props) {
+  const changeHandler = (e:React.ChangeEvent<HTMLSelectElement | undefined>) =>{
+    if(label=="Bike"){
+      setValue?.((prev) => ({ ...prev, "brand": e.target.value }));
+    }
+    if(label=="Mobile"){
+      setMobileBrandValue?.((prev) => ({ ...prev, "brand": e.target.value }));
+    }
+
+  }
   return (
     <>
-      <Label>{label}*</Label>
-      <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Choose Brand" />
-        </SelectTrigger>
-        <SelectContent>
+      <Label htmlFor="dropdown">{label}*</Label>
+      <select id="dropdown" className="select" value={value} onChange={changeHandler}>
           {dropdown.find((e) => e.label == label)
             ?.options.map((e) => (
-              <SelectItem className="cursor-pointer" value={e}>
+              <option className="cursor-pointer" value={e}>
                 {e}
-              </SelectItem>
+              </option>
             ))}
-        </SelectContent>
-      </Select>
+            </select>
     </>
   )
 }

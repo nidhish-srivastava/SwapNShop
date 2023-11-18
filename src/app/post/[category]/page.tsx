@@ -2,7 +2,7 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
 import { base64 } from "@/lib/base64";
@@ -17,6 +17,15 @@ import { Label } from "@/components/ui/label";
 const roboto = Roboto({ weight: "500", subsets: ["latin"] });
 import { states } from "../../../lib/statesdistricts.json";
 import { Button } from "@/components/ui/button";
+import {
+  bikeCreatePost,
+  carCreatePost,
+  createPost,
+  mobileCreatePost,
+  propertyCreatePost,
+} from "@/lib/actions/post.actions";
+import uploadImage from "../../../upload.jpg";
+import { useSession } from "next-auth/react";
 
 type images = {
   picture: string;
@@ -34,13 +43,37 @@ const images = [
 function page() {
   const params = useParams();
   const { toast } = useToast();
+  const { data: session } = useSession();
   const [stateIndex, setStateIndex] = useState(0);
   const [imagesArray, setImagesArray] = useState(images);
-  const [userImg, setUserImg] = useState(base64);
-  const [userImg2, setUserImg2] = useState(base64);
-  const [userImg3, setUserImg3] = useState(base64);
-  const [userImg4, setUserImg4] = useState(base64);
-  const [userImg5, setUserImg5] = useState(base64);
+  const [userImg, setUserImg] = useState(uploadImage);
+  const [userImg2, setUserImg2] = useState(uploadImage);
+  const [userImg3, setUserImg3] = useState(uploadImage);
+  const [userImg4, setUserImg4] = useState(uploadImage);
+  const [userImg5, setUserImg5] = useState(uploadImage);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    price: 0,
+    author: session?.user?.name,
+    images: [],
+  });
+  const [propertyFormData, setPropertyFormData] = useState({});
+  const [carsFormData, setCarsFormData] = useState({
+    year: 0,
+    fuel: "",
+    transmission: "",
+    kmDriven: 0,
+  });
+  const [bikesFormData, setBikesFormData] = useState({
+    brand: "",
+    year: 0,
+    kmDriven: 0,
+  });
+  const [mobileFormData, setMobileFormData] = useState({
+    brand: "",
+  });
+
   // const [pictureLoading,setPictureLoading] = useState(false)
   let category = params.category;
   const decodedCategory = decodeURIComponent(category as string);
@@ -48,11 +81,15 @@ function page() {
   const categoryTypeRender = () => {
     switch (decodedCategory) {
       case "Cars":
-        return <Cars />;
+        return (
+          <Cars carsFormData={carsFormData} setCarsFormData={setCarsFormData} />
+        )
       case "Bikes":
-        return <Bikes />;
+        return (
+          <Bikes bikesFormData = {bikesFormData} setBikesFormData={setBikesFormData} />
+        )
       case "Mobiles":
-        return <DropDown label="Mobile" />;
+        return <DropDown label="Mobile" value={mobileFormData.brand} setMobileBrandValue={setMobileFormData}  />;
       case "Properties":
         return <Properties />;
     }
@@ -74,6 +111,46 @@ function page() {
     };
     // simulate a click
     fileInput.click();
+  };
+
+  const changeHandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const submitPostHandler = async () => {
+    switch (decodedCategory) {
+      case "Cars":
+        await carCreatePost(carsFormData, formData);
+        break;
+      case "Bikes":
+        await bikeCreatePost(bikesFormData, formData);
+        break;
+      case "Mobiles":
+        await mobileCreatePost(mobileFormData, formData);
+        break;
+      case "Properties":
+        // await propertyCreatePost({type:"aa"},
+        // {description:"asda",price:11,title:"asda",images:[]}
+        // )
+        break;
+      case "Electronic and Appliances":
+        await createPost(formData);
+        break;
+      case "Furniture":
+        await createPost(formData);
+        break;
+      case "Pets":
+        await createPost(formData);
+        break;
+      case "Books,Sports and Hobbies":
+        await createPost(formData);
+        break;
+      case "Fashion":
+        await createPost(formData);
+        break;
+    }
   };
 
   return (
@@ -108,12 +185,20 @@ function page() {
           </h2>
           {categoryTypeRender()}
           <Label htmlFor="Ad title">Ad Title*</Label>
-          <Input className="h-[3rem] resize-none" name="" id="Ad title" />
+          <Input
+            className="h-[3rem] resize-none"
+            name="title"
+            onChange={changeHandler}
+            value={formData.title}
+            id="Ad title"
+          />
           <Label htmlFor="Description">Description*</Label>
           <Textarea
             className="h-[3rem] resize-none "
-            name=""
+            name="description"
             id="Description"
+            onChange={changeHandler}
+            value={formData.description}
           />
           <hr />
           <h2 className={`post-form-heading  ${roboto.className}`}>
@@ -122,7 +207,15 @@ function page() {
           <Label htmlFor="price">Price*</Label>
           <div className="border border-black flex">
             <span className="p-2">&#8377;</span>
-            <Input type="number" min={0} id="price" className="border-none" />
+            <Input
+              type="number"
+              name="price"
+              onChange={changeHandler}
+              value={formData.price}
+              min={0}
+              id="price"
+              className="border-none"
+            />
           </div>
         </div>
         <hr />
@@ -150,27 +243,41 @@ function page() {
         </div>
         <hr />
         <div className="px-2 pb-6">
-        <h2 className={`post-form-heading p-4 ${roboto.className}`}>
+          <h2 className={`post-form-heading p-4 ${roboto.className}`}>
             CONFIRM LOCATION
           </h2>
           <div className="my-4">
-          <Label className="block py-1 px-4 text-[.9rem]" id="state">State*</Label>
-          <select id="state" className="border border-slate-800 p-2 ml-4" onChange={e=>setStateIndex(+e.target.value)} value={stateIndex}>
-            {states.map((e,i) => (
-              <option value={i}>{e.state}</option>
+            <Label className="block py-1 px-4 text-[.9rem]" id="state">
+              State*
+            </Label>
+            <select
+              id="state"
+              className="select"
+              onChange={(e) => setStateIndex(+e.target.value)}
+              value={stateIndex}
+            >
+              {states.map((e, i) => (
+                <option value={i}>{e.state}</option>
               ))}
-          </select>
-           </div>
-           <div>
-          <Label className="block py-1 px-4 text-[.9rem]" id="city">City*</Label>
-          <select className="border ml-4 p-2 border-slate-800">
-            {states[stateIndex]?.districts.map((e)=>(
-              <option>{e}</option>
+            </select>
+          </div>
+          <div>
+            <Label className="block py-1 px-4 text-[.9rem]" id="city">
+              City*
+            </Label>
+            <select className="select">
+              {states[stateIndex]?.districts.map((e) => (
+                <option>{e}</option>
               ))}
-          </select>
-              </div>
-              </div>
-              <Button className=" block mx-auto bg-blue-500 text-white text-xl">Post</Button>
+            </select>
+          </div>
+        </div>
+        <Button
+          onClick={submitPostHandler}
+          className=" block mx-auto bg-blue-500 text-white text-xl"
+        >
+          Post
+        </Button>
         {/* {imagesArray.map((imgObj,index)=>(
         <div key={Math.random().toString()} onClick={()=>imageUpload(index)}>
         <Image

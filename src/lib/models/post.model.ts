@@ -3,12 +3,13 @@ import mongoose from 'mongoose'
 const commonPropertiesSchema = new mongoose.Schema({
     description : {type:String,required:true},
     title : {type:String,required:true},
-    price : {type : Number,required : true},
-    images : [{type : String}]
+    price : {type : Number,required:true},
+    images : [{type : String}],
+    author : {type : String,required:true}
 })
 
 const CarSchema = commonPropertiesSchema.discriminator('Car',{
-   year : {type:String,required:true},
+   year : {type:Number,required:true},
    fuel : {type:String,required:true},
    transmission : {type:String,required:true},
    kmDriven : {type:Number,required:true},
@@ -44,10 +45,10 @@ const propertySchema = commonPropertiesSchema.discriminator('Property',{
 
 
 const PostModel = mongoose.models.Post || mongoose.model("Post",commonPropertiesSchema)
+export default PostModel
 const CarModel = mongoose.models.Car || mongoose.model("Car",CarSchema)
 const BikeModel = mongoose.models.Bike || mongoose.model("Bike",BikeSchema)
 const MobileModel = mongoose.models.Mobile || mongoose.model("Mobile",mobileSchema)
 const PropertyModel = mongoose.models.Property || mongoose.model("Property",propertySchema)
 
-export  {PostModel,CarModel,BikeModel,MobileModel,PropertyModel}
-// export default PostModel
+export  {CarModel,BikeModel,MobileModel,PropertyModel}
