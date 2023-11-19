@@ -1,7 +1,6 @@
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "../ui/input";
-import FieldButtonGroup from "./FieldButtonGroup";
 import { carSchema } from "@/lib/actions/post.actions";
 
 type carProps = {
@@ -24,7 +23,7 @@ function Cars({ carsFormData, setCarsFormData }: carProps) {
         value={carsFormData.year}
         onChange={changeHandler}
       />
-      <div>
+      {/* <div>
         <FieldButtonGroup label="Fuel" setCarsFormData={setCarsFormData} />
       </div>
       <div>
@@ -32,7 +31,7 @@ function Cars({ carsFormData, setCarsFormData }: carProps) {
           label="Transmission"
           setCarsFormData={setCarsFormData}
         />
-      </div>
+      </div> */}
       <div>
         <Label htmlFor="kmDriven">KM Driven*</Label>
         <Input

@@ -1,6 +1,6 @@
 "use server";
 import { connectToDB } from "../mongoose"
-import { BikeModel, CarModel, MobileModel, PostModel } from "../models"
+import { BikeModel, CarModel, MobileModel, PostModel, PropertyModel } from "../models"
 
 
 export type commonPropertiesSchema = {
@@ -46,8 +46,9 @@ export type propertySchema = {
 export async function carCreatePost({year,fuel,transmission,kmDriven}:carSchema,{description,price,title,images,state,district,author}:commonPropertiesSchema){
     try {
         connectToDB()
-        const newCarPost = new CarModel({year:year,fuel:fuel,transmission:transmission,kmDriven:kmDriven,
-            title:title,description:description,price:price
+        const newCarPost = new CarModel({
+            year:year,fuel:fuel,transmission:transmission,kmDriven:kmDriven,
+        title:title,description:description,price:price,location : {district : district,state:state},author:author
         })
         return newCarPost.save()
     } catch (error) {
@@ -59,7 +60,8 @@ export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,des
     try {
         connectToDB()
         const newBikePost = new BikeModel({
-            title:title,description:description,price:price,brand:brand,year:year,kmDriven:kmDriven
+        title:title,description:description,price:price,location : {district : district,state:state},author:author,
+            brand:brand,year:year,kmDriven:kmDriven
         })
         return newBikePost.save()
     } catch (error) {
@@ -67,11 +69,13 @@ export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,des
     }
 }
 
+
 export async function mobileCreatePost({brand}:{brand : string},{title,description,price,author,state,district}:commonPropertiesSchema){
   try {
     connectToDB()
     const newMobilePost = new MobileModel({
-        title:title,description:description,price:price,brand:brand
+        title:title,description:description,price:price,location : {district : district,state:state},author:author,
+        brand:brand
     })
     return newMobilePost.save()
   } catch (error) {
@@ -79,10 +83,14 @@ export async function mobileCreatePost({brand}:{brand : string},{title,descripti
   }
 }
 
-export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName}:propertySchema,{title,description,price}:commonPropertiesSchema){
+export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName}:propertySchema,{title,description,price,author,state,district}:commonPropertiesSchema){
     try {
         connectToDB()
-        
+        const newPropertyPost = new PropertyModel({
+            title:title,description:description,price:price,location : {district : district,state:state},author:author,
+            type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName
+        })
+        return newPropertyPost.save()
     } catch (error) {
         
     }
@@ -91,7 +99,9 @@ export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,con
 export async function createPost({description,title,price,images,state,district,author} : commonPropertiesSchema){
     try {
         connectToDB()
-        const newPost = new PostModel({title:title,description:description,price:price})
+        const newPost = new PostModel({
+            title:title,description:description,price:price,location : {district : district,state:state},author:author,
+        })
         return newPost.save()
     } catch (error) {
         
