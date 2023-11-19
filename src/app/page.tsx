@@ -55,21 +55,21 @@ import { useEffect } from "react"
 
 function Page() {
 
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          // Handle successful position retrieval
-          const { latitude, longitude } = position.coords;
-          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-        },
-        (error) => {
-          // Handle error
-          console.error(`Error getting location: ${error.message}`);
-        }
-      );
-    }
-  }, []); 
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined' && window.navigator) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         // Handle successful position retrieval
+  //         const { latitude, longitude } = position.coords;
+  //         console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+  //       },
+  //       (error) => {
+  //         // Handle error
+  //         console.error(`Error getting location: ${error.message}`);
+  //       }
+  //     );
+  //   }
+  // }, []); 
   
   return (
     <div></div>

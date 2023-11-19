@@ -5,42 +5,45 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+// {
+//   label : "Fuel",
+//   buttons : ["CNG and Hybrids","Diesel","Electric","LPG","Petrol"],
+//   selected : false
+// },
+// {
+//   label : "Transmission",
+//   buttons : ["Automatic","Manual"],
+//   selected : false
+// },
+
 export const fieldButtons = [
   {
-    label : "Fuel",
-    buttons : ["CNG and Hybrids","Diesel","Electric","LPG","Petrol"]
-  },
-  {
-    label : "Transmission",
-    buttons : ["Automatic","Manual"]
-  },
-  {
     label: "Type",
-    buttons: ["Apartments", "Build Floors", "Farm Houses", "Houses and Villas"],
+    buttons: [{selected:false,btn : "Apartments"}, {selected:false,btn : "Build Floors"}, {selected:false,btn : "Farm Houses"}, {selected:false,btn : "Houses and Villas"}],
   },
   {
     label:"Bedrooms",
-    buttons : [1,2,3,4,"4+"]
+    buttons : [{selected:false,btn : 1},{selected:false,btn : 2},{selected:false,btn : 3},{selected:false,btn : 4},{selected:false,btn : "4+"}],
   },
   {
     label : "Bathrooms",
-    buttons : [1,2,3,4,"4+"]
+    buttons : [{selected:false,btn : 1},{selected:false,btn : 2},{selected:false,btn : 3},{selected:false,btn : 4},{selected:false,btn : "4+"}],
   },
   {
     label : "Furnishing",
-    buttons : ["Furnished","Semi Furnished","Unfurnished"]
+    buttons : [{selected:false,btn : "Furnished"},{selected:false,btn : "Semi Furnished"},{selected:false,btn:"Unfurnished"}],
   },
   {
     label : "Construction Status",
-    buttons : ["New Launch","Ready to move","Under Construction"]
+    buttons : [{selected:false,btn : "New Launch"},{selected:false,btn : "Ready to move"},{selected:false,btn : "Under Construction"}],
   },
   {
     label : "Listed By",
-    buttons : ["Builder","Dealer","Owner"]
+    buttons : [{selected:false,btn : "Builder"},{selected:false,btn : "Dealer"},{selected:false,btn : "Owner"}],
   },
   {
     label:  "Car Parking",
-    buttons : [0,1,2,3,"3+"]
+    buttons : [{selected:false,btn : 0},{selected:false,btn : 1},{selected:false,btn : 2},{selected:false,btn : 3},{selected:false,btn : "3+"}],
   },
 ];
 

@@ -23,6 +23,7 @@ import {
   commonPropertiesSchema,
   createPost,
   mobileCreatePost,
+  propertyCreatePost,
   propertySchema,
 } from "@/lib/actions/post.actions";
 import uploadImage from "../../../upload.jpg";
@@ -136,9 +137,9 @@ function page() {
     setShowDistrict(true)
   }
 
-  useEffect(()=>{
-    console.log(formData);
-  },[formData])
+  // useEffect(()=>{
+  //   console.log(formData);
+  // },[formData])
 
 
 
@@ -154,9 +155,7 @@ function page() {
         await mobileCreatePost(mobileFormData, formData);
         break;
       case "Properties":
-        // await propertyCreatePost({type:"aa"},
-        // {description:"asda",price:11,title:"asda",images:[]}
-        // )
+        await propertyCreatePost(propertiesFormData,formData)
         break;
       case "Electronic and Appliances":
         await createPost(formData);
