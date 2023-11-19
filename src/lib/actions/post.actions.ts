@@ -8,6 +8,9 @@ export type commonPropertiesSchema = {
     title : string
     price : number
     images : string[]
+    author : string | null | undefined
+    state : string
+    district : string
 }
 
 export type carSchema = {
@@ -40,7 +43,7 @@ export type propertySchema = {
     projectName : string
 }
 
-export async function carCreatePost({year,fuel,transmission,kmDriven}:carSchema,{description,price,title,images}:commonPropertiesSchema){
+export async function carCreatePost({year,fuel,transmission,kmDriven}:carSchema,{description,price,title,images,state,district,author}:commonPropertiesSchema){
     try {
         connectToDB()
         const newCarPost = new CarModel({year:year,fuel:fuel,transmission:transmission,kmDriven:kmDriven,
@@ -52,7 +55,7 @@ export async function carCreatePost({year,fuel,transmission,kmDriven}:carSchema,
     }
 }
 
-export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,description,price}:commonPropertiesSchema){
+export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,description,price,state,district,author}:commonPropertiesSchema){
     try {
         connectToDB()
         const newBikePost = new BikeModel({
@@ -64,7 +67,7 @@ export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,des
     }
 }
 
-export async function mobileCreatePost({brand}:{brand : string},{title,description,price}:commonPropertiesSchema){
+export async function mobileCreatePost({brand}:{brand : string},{title,description,price,author,state,district}:commonPropertiesSchema){
   try {
     connectToDB()
     const newMobilePost = new MobileModel({
@@ -85,7 +88,7 @@ export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,con
     }
 }
 
-export async function createPost({description,title,price,images} : commonPropertiesSchema){
+export async function createPost({description,title,price,images,state,district,author} : commonPropertiesSchema){
     try {
         connectToDB()
         const newPost = new PostModel({title:title,description:description,price:price})

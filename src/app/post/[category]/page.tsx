@@ -2,7 +2,7 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Cars from "@/components/postForm/Cars";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,7 @@ import {
   bikeSchema,
   carCreatePost,
   carSchema,
+  commonPropertiesSchema,
   createPost,
   mobileCreatePost,
   propertySchema,
@@ -44,12 +45,16 @@ function page() {
   const [userImg3, setUserImg3] = useState(uploadImage);
   const [userImg4, setUserImg4] = useState(uploadImage);
   const [userImg5, setUserImg5] = useState(uploadImage);
-  const [formData, setFormData] = useState({
+  const [showDistrict,setShowDistrict] = useState(false)
+  const [district,setDistrict] = useState("")
+  const [formData, setFormData] = useState<commonPropertiesSchema>({
     title: "",
     description: "",
     price: 0,
+    state : "",
+    district : "",
     author: session?.user?.name,
-    images: [],
+    images : []
   });
   const [carsFormData, setCarsFormData] = useState<carSchema>({
     year: 0,
@@ -121,10 +126,21 @@ function page() {
   };
 
   const changeHandler = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const selectLocation = (e:React.ChangeEvent<HTMLSelectElement>) =>{
+    setFormData((prev) => ({ ...prev, [e.target.name] : e.target.value} ));
+    setShowDistrict(true)
+  }
+
+  useEffect(()=>{
+    console.log(formData);
+  },[formData])
+
+
 
   const submitPostHandler = async () => {
     switch (decodedCategory) {
@@ -159,6 +175,8 @@ function page() {
         break;
     }
   };
+
+ 
 
   return (
     <>
@@ -253,30 +271,37 @@ function page() {
           <h2 className={`post-form-heading p-4 ${roboto.className}`}>
             CONFIRM LOCATION
           </h2>
-          <div className="my-4">
-            <Label className="block py-1 px-4 text-[.9rem]" id="state">
+          <div className="my-4 px-2">
+            <Label className="block py-1 text-[.9rem]" htmlFor="state">
               State*
             </Label>
             <select
-              id="state"
+              name="state"
               className="select"
-              onChange={(e) => setStateIndex(+e.target.value)}
-              value={stateIndex}
+              onChange={selectLocation}
+              value={formData.state}
             >
               {states.map((e, i) => (
-                <option value={i}>{e.state}</option>
+                <option value={e.state}>{e.state}</option>
               ))}
             </select>
           </div>
-          <div>
-            <Label className="block py-1 px-4 text-[.9rem]" id="city">
+          <div className="px-2">
+            {
+              showDistrict && (
+                <>
+            <Label className="block py-1  text-[.9rem]" id="city">
               City*
             </Label>
-            <select className="select">
-              {states[stateIndex]?.districts.map((e) => (
-                <option>{e}</option>
+            <select className="select" name="district" value={formData.district} onChange={selectLocation}
+            >
+              {states.find(e=>e.state==formData.state)?.districts.map((districtName) => (
+                <option value={districtName}>{districtName}</option>
               ))}
             </select>
+                </>
+              )
+            }
           </div>
         </div>
         <Button
