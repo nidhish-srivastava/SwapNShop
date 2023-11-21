@@ -7,6 +7,7 @@ export type commonPropertiesSchema = {
     description : string
     title : string
     price : number
+    // images : {img:string,uploaded:boolean}[]
     images : string[]
     author : string | null | undefined
     state : string
@@ -47,8 +48,10 @@ export async function carCreatePost({year,fuel,transmission,kmDriven}:carSchema,
     try {
         connectToDB()
         const newCarPost = new CarModel({
-            year:year,fuel:fuel,transmission:transmission,kmDriven:kmDriven,
-        title:title,description:description,price:price,location : {district : district,state:state},author:author
+            year:year,
+            // fuel:fuel,transmission:transmission,
+            kmDriven:kmDriven,
+        title,description,price,location : {district : district,state:state},author,images,
         })
         return newCarPost.save()
     } catch (error) {
@@ -56,11 +59,11 @@ export async function carCreatePost({year,fuel,transmission,kmDriven}:carSchema,
     }
 }
 
-export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,description,price,state,district,author}:commonPropertiesSchema){
+export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,description,price,state,district,author,images}:commonPropertiesSchema){
     try {
         connectToDB()
         const newBikePost = new BikeModel({
-        title:title,description:description,price:price,location : {district : district,state:state},author:author,
+        title,description,price,location : {district : district,state:state},author,images,
             brand:brand,year:year,kmDriven:kmDriven
         })
         return newBikePost.save()
@@ -70,11 +73,11 @@ export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,des
 }
 
 
-export async function mobileCreatePost({brand}:{brand : string},{title,description,price,author,state,district}:commonPropertiesSchema){
+export async function mobileCreatePost({brand}:{brand : string},{title,description,price,author,state,district,images}:commonPropertiesSchema){
   try {
     connectToDB()
     const newMobilePost = new MobileModel({
-        title:title,description:description,price:price,location : {district : district,state:state},author:author,
+        title,description,price,location : {district : district,state:state},author,images,
         brand:brand
     })
     return newMobilePost.save()
@@ -83,11 +86,11 @@ export async function mobileCreatePost({brand}:{brand : string},{title,descripti
   }
 }
 
-export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName}:propertySchema,{title,description,price,author,state,district}:commonPropertiesSchema){
+export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName}:propertySchema,{title,images,description,price,author,state,district}:commonPropertiesSchema){
     try {
         connectToDB()
         const newPropertyPost = new PropertyModel({
-            title:title,description:description,price:price,location : {district : district,state:state},author:author,
+            title,description,price,location : {district : district,state:state},author,images,
             type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName
         })
         return newPropertyPost.save()
@@ -97,12 +100,19 @@ export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,con
 }
 
 export async function createPost({description,title,price,images,state,district,author} : commonPropertiesSchema){
+    const updatedImages = images.filter(e=>{
+        return e.includes("upload_zypu8w") ? "" : e
+    })
     try {
         connectToDB()
         const newPost = new PostModel({
-            title:title,description:description,price:price,location : {district : district,state:state},author:author,
+            title,description,price,location : {district : district,state:state},author,images : updatedImages,
         })
-        return newPost.save()
+        try {
+            return newPost.save()
+        } catch (error) {
+            
+        }
     } catch (error) {
         
     }

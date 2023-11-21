@@ -74,9 +74,9 @@ function PropertyFieldButtons({ label, setCarsFormData, setPropertiesFormData }:
     }
       )
   };
-  useEffect(()=>{
-   console.log(fieldButtonsState);
-  },[fieldButtonsState])
+  // useEffect(()=>{
+  //  console.log(fieldButtonsState);
+  // },[fieldButtonsState])
   return (
     <>
       <Label htmlFor="type">{label}*</Label>

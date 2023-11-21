@@ -4,7 +4,7 @@ const commonPropertiesSchema = new mongoose.Schema({
   description: { type: String, required: true },
   title: { type: String, required: true },
   price: { type: Number, required: true },
-  images: [{ type: String }],
+  images: {type : [String],default:[]},
   author: { type: String, required: true },
   location: {
     type: Object, // Specify the type as Object
@@ -22,8 +22,8 @@ const commonPropertiesSchema = new mongoose.Schema({
 
 const CarSchema = commonPropertiesSchema.discriminator("Car", {
   year: { type: Number, required: true },
-  fuel: { type: String, required: true },
-  transmission: { type: String, required: true },
+  // fuel: { type: String, required: true },
+  // transmission: { type: String, required: true },
   kmDriven: { type: Number, required: true },
 });
 
