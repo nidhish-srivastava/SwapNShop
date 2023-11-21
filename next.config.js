@@ -11,14 +11,12 @@ const nextConfig = {
       ignoreDuringBuilds: true,
     },
     images: {
-      remotePatterns: [
-        {
-          protocol : "https",
-          hostname :"lh3.googleusercontent.com"
-        }
+      domains: [
+        'res.cloudinary.com',
+        "lh3.googleusercontent.com"
       ],
-    },
-  };
+  },
+  }
   
   module.exports = nextConfig;
   

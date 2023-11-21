@@ -26,13 +26,7 @@ function Properties({propertiesFormData,setPropertiesFormData}:propertyProps) {
       <PropertyFieldButtons label={e.label} propertiesFormData={propertiesFormData} setPropertiesFormData={setPropertiesFormData}/>
       ))
     }
-      {/* <FieldButtonGroup label="Type" propertiesFormData={propertiesFormData} setPropertiesFormData={setPropertiesFormData}/>
-      <FieldButtonGroup label="Bedrooms" propertiesFormData={propertiesFormData} setPropertiesFormData={setPropertiesFormData}/>
-      <FieldButtonGroup label="Bathrooms" propertiesFormData={propertiesFormData} setPropertiesFormData={setPropertiesFormData}/>
-      <FieldButtonGroup label="Furnishing" propertiesFormData={propertiesFormData} setPropertiesFormData={setPropertiesFormData}/>
-      <FieldButtonGroup label="Construction Status" propertiesFormData={propertiesFormData} setPropertiesFormData={setPropertiesFormData}/>
-      <FieldButtonGroup label="Listed By" propertiesFormData={propertiesFormData} setPropertiesFormData={setPropertiesFormData}/> */}
-
+   
       <Label htmlFor="superBuiltUpArea">Super Builtup area (ft<sup>2</sup>)*</Label>
       <Input value={propertiesFormData.superBuiltUpArea} onChange={changeHandler} name="superBuiltUpArea" type="number" min={0} id="superBuiltUpArea"/>
       <Label htmlFor="carpetArea">Carpet Area (ft<sup>2</sup>)*</Label>

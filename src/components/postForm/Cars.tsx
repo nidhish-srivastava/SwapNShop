@@ -8,7 +8,12 @@ type carProps = {
   setCarsFormData: React.Dispatch<React.SetStateAction<carSchema>>;
 };
 
+
+
 function Cars({ carsFormData, setCarsFormData }: carProps) {
+  const clickHandler = (e:any)=>{
+    
+  }
   const changeHandler = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -23,15 +28,7 @@ function Cars({ carsFormData, setCarsFormData }: carProps) {
         value={carsFormData.year}
         onChange={changeHandler}
       />
-      {/* <div>
-        <FieldButtonGroup label="Fuel" setCarsFormData={setCarsFormData} />
-      </div>
-      <div>
-        <FieldButtonGroup
-          label="Transmission"
-          setCarsFormData={setCarsFormData}
-        />
-      </div> */}
+
       <div>
         <Label htmlFor="kmDriven">KM Driven*</Label>
         <Input
