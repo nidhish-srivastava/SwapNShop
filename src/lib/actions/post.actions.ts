@@ -11,7 +11,9 @@ export type commonPropertiesSchema = {
     images : string[]
     author : string | null | undefined
     state : string
+    location ?: {district:string,state:string} 
     district : string
+    category : string
 }
 
 export type carSchema = {
@@ -44,27 +46,36 @@ export type propertySchema = {
     projectName : string
 }
 
-export async function carCreatePost({year,fuel,transmission,kmDriven}:carSchema,{description,price,title,images,state,district,author}:commonPropertiesSchema){
+
+const updateImages = (images : string[]) => {
+    const updatedImages = images.filter(e=>{
+        return e.includes("upload_zypu8w") ? "" : e
+    })
+    return updatedImages
+}
+
+export async function carCreatePost({year,fuel,transmission,kmDriven}:carSchema,{description,price,title,images,state,district,author,category}:commonPropertiesSchema){
+    console.log(category);
     try {
-        connectToDB()
-        const newCarPost = new CarModel({
-            year:year,
-            // fuel:fuel,transmission:transmission,
-            kmDriven:kmDriven,
-        title,description,price,location : {district : district,state:state},author,images,
-        })
-        return newCarPost.save()
+        // connectToDB()
+        // const newCarPost = new CarModel({
+        //     year:year,
+        //     // fuel:fuel,transmission:transmission,
+        //     kmDriven:kmDriven,
+        // title,description,price,location : {district : district,state:state},author,images : updateImages(images),category,
+        // })
+        // return newCarPost.save()
     } catch (error) {
         
     }
 }
 
-export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,description,price,state,district,author,images}:commonPropertiesSchema){
+export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,description,price,state,district,author,images,category}:commonPropertiesSchema){
     try {
         connectToDB()
         const newBikePost = new BikeModel({
-        title,description,price,location : {district : district,state:state},author,images,
-            brand:brand,year:year,kmDriven:kmDriven
+        title,description,price,location : {district : district,state:state},author,images: updateImages(images),category,
+            brand,year,kmDriven
         })
         return newBikePost.save()
     } catch (error) {
@@ -73,12 +84,12 @@ export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,des
 }
 
 
-export async function mobileCreatePost({brand}:{brand : string},{title,description,price,author,state,district,images}:commonPropertiesSchema){
+export async function mobileCreatePost({brand}:{brand : string},{title,description,price,author,state,district,images,category}:commonPropertiesSchema){
   try {
     connectToDB()
     const newMobilePost = new MobileModel({
-        title,description,price,location : {district : district,state:state},author,images,
-        brand:brand
+        title,description,price,location : {district : district,state:state},author,images: updateImages(images),category,
+        brand
     })
     return newMobilePost.save()
   } catch (error) {
@@ -86,11 +97,11 @@ export async function mobileCreatePost({brand}:{brand : string},{title,descripti
   }
 }
 
-export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName}:propertySchema,{title,images,description,price,author,state,district}:commonPropertiesSchema){
+export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName}:propertySchema,{title,images,description,price,author,state,district,category}:commonPropertiesSchema){
     try {
         connectToDB()
         const newPropertyPost = new PropertyModel({
-            title,description,price,location : {district : district,state:state},author,images,
+            title,description,price,location : {district : district,state:state},author,images: updateImages(images),category,
             type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName
         })
         return newPropertyPost.save()
@@ -99,14 +110,15 @@ export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,con
     }
 }
 
-export async function createPost({description,title,price,images,state,district,author} : commonPropertiesSchema){
-    const updatedImages = images.filter(e=>{
-        return e.includes("upload_zypu8w") ? "" : e
-    })
+
+export async function createPost({description,title,price,images,state,district,author,category} : commonPropertiesSchema){
+    // const updatedImages = images.filter(e=>{
+    //     return e.includes("upload_zypu8w") ? "" : e
+    // })
     try {
         connectToDB()
         const newPost = new PostModel({
-            title,description,price,location : {district : district,state:state},author,images : updatedImages,
+            title,description,price,location : {district : district,state:state},author,images: updateImages,category
         })
         try {
             return newPost.save()
@@ -118,19 +130,19 @@ export async function createPost({description,title,price,images,state,district,
     }
 }
 
-// export async function fetchAllPosts(pageNumber:number){
-//     try {
-//         connectToDB()
-//         const allPosts = await PostModel.find({})
-//         const page = pageNumber || 1
-//         const pageSize = 10
-//         const startIndex = (page-1)*pageSize
-//         const endIndex = startIndex + pageSize
-//         const itemsToSend = allPosts.slice(startIndex,endIndex)
-//         console.log(itemsToSend.length);
-//         const result =  {itemsToSend,totalPages : Math.ceil(allPosts.length/pageSize)}
-//         return JSON.parse(JSON.stringify(result))
-//     } catch (error) {
+export async function fetchAllPosts(pageNumber:number){
+    try {
+        connectToDB()
+        const allPosts = await PostModel.find({})
+        const page = pageNumber || 1
+        const pageSize = 20
+        const startIndex = (page-1)*pageSize
+        const endIndex = startIndex + pageSize
+        const itemsToSend = allPosts.slice(startIndex,endIndex)
+        // console.log(itemsToSend.length);
+        const result =  {itemsToSend,totalPages : Math.ceil(allPosts.length/pageSize)}
+        return JSON.parse(JSON.stringify(result))
+    } catch (error) {
         
-//     }
-// }
+    }
+}

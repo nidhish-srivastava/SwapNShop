@@ -6,6 +6,7 @@ const commonPropertiesSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   images: {type : [String],default:[]},
   author: { type: String, required: true },
+  category : {type:String,required:true},
   location: {
     type: Object, // Specify the type as Object
     required: true,
