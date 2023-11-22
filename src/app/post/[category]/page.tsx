@@ -36,17 +36,22 @@ function page() {
   const { toast } = useToast();
   const params = useParams();
   const { data: session } = useSession();
-  const defaultImg = { img: uploadImage, uploaded: false };
+  // const defaultImg = { img: uploadImage, uploaded: false };
   const [userImg, setUserImg] = useState(uploadImage);
   const [userImg2, setUserImg2] = useState(uploadImage);
   const [userImg3, setUserImg3] = useState(uploadImage);
   const [userImg4, setUserImg4] = useState(uploadImage);
   const [userImg5, setUserImg5] = useState(uploadImage);
   const [showDistrict, setShowDistrict] = useState(false);
+
+  
+  let category = params.category;
+  const decodedCategory = decodeURIComponent(category as string);
+
   // const imagesArray = [userImg, userImg2, userImg3, userImg4, userImg5];
 
   const filter = () => {
-    console.log(userImg2);
+    // console.log(userImg2);
     
     // const updated = imagesArray.map((e) => {
     //   if (e.uploaded == false) {
@@ -66,6 +71,7 @@ function page() {
     district: "",
     author: session?.user?.name,
     images: [userImg,userImg2,userImg3,userImg4,userImg5],
+    category : decodedCategory
   });
   const [carsFormData, setCarsFormData] = useState<carSchema>({
     year: 0,
@@ -97,9 +103,6 @@ function page() {
     facing: "",
     projectName: "",
   });
-
-  let category = params.category;
-  const decodedCategory = decodeURIComponent(category as string);
 
   const categoryTypeRender = () => {
     switch (decodedCategory) {
@@ -204,7 +207,7 @@ function page() {
           try {
           await carCreatePost(carsFormData, formData);
         } catch (error) {
-          
+          throw error
         }
           break;
         case "Bikes":
@@ -286,7 +289,6 @@ function page() {
           Post Your AD
         </h1>
       </header>
-      {/* <button onClick={filter}>asd</button> */}
       <main className="sm:w-3/5 mx-auto pb-8">
         <div className="py-4">
           <h2 className={`post-form-heading px-4 p-2 ${roboto.className}`}>
