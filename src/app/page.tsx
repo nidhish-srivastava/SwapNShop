@@ -1,6 +1,9 @@
 "use client"
 import { useEffect,useState } from "react"
 import { commonPropertiesSchema, fetchAllPosts } from "@/lib/actions/post.actions";
+import Link from "next/link";
+import Image from "next/image";
+import PostCard from "@/components/PostCard";
 
   
   function Page() {
@@ -11,7 +14,7 @@ import { commonPropertiesSchema, fetchAllPosts } from "@/lib/actions/post.action
     useEffect(() => {
       const fetchItems = async () => {
         const result = await fetchAllPosts(pageNumber);
-        console.log(result);
+        // console.log(result);
         setPosts((e)=>[...e,...result?.itemsToSend]);
         setTotalPages(result.totalPages);
       };
@@ -61,27 +64,11 @@ import { commonPropertiesSchema, fetchAllPosts } from "@/lib/actions/post.action
 
     return (
     <>
-      <main className="grid grid-cols-3 w-[90%] mx-auto">
+      <main className="flex mt-2 flex-col md:grid gap-2 md:grid-cols-3 w-[90%] mx-auto">
         {posts.map((item,index) => (
-          <div className="p-12 flex flex-col">
-          <h2 className="text-[1.4rem]" key={index}>{item?.title}</h2>
-              <div>
-                <img src={item.images[0]} alt="" />
-              </div>
-          <h3>
-            {item?.author}
-          </h3>
-          <h3>
-            &#8377; 
-           {item?.price}
-          </h3>
-          <h3>
-          {item?.location?.district} , {item?.location?.state}
-          </h3>
-          <h3>
-            {item.category}
-          </h3>
-          </div>
+          <Link href={`/item/${item?.title}-${item?._id}`} key={index}>
+            <PostCard postObj={item} />
+          </Link>
         ))}
       </main>
     </>
