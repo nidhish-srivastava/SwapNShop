@@ -3,7 +3,6 @@ import { useSession } from "next-auth/react"
 import Image from "next/image"
 const page = () => {
     const {data : session} = useSession()
-    console.log(session);
     const src = session?.user?.image as string
   return (
     <div className="flex flex-col gap-4 mt-8 md:mt-4 lg:mt-8 items-center">
