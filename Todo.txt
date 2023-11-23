@@ -1,3 +1,7 @@
-I want to create user profiles(i have dont the authentication using next auth)
+Create a modal for sign up rather than taking to a different url
 
-When user registess for the first time,i want to make a api call for creating a user
+Create add to fav option in front end
+
+Add to fav and so on,create its apis
+
+Update Post api

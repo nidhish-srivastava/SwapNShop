@@ -14,6 +14,7 @@ export type commonPropertiesSchema = {
     location ?: {district:string,state:string} 
     district : string
     category : string
+    _id?:string
 }
 
 export type carSchema = {
@@ -146,3 +147,14 @@ export async function fetchAllPosts(pageNumber:number){
         
     }
 }
+
+export async function fetchSinglePost(id:string){
+    try {
+        connectToDB()
+        const response = await PostModel.findById(id)
+        return JSON.parse(JSON.stringify(response))
+    } catch (error) {
+        
+    }
+}
+
