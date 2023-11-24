@@ -2,7 +2,7 @@
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { deletePost } from "@/lib/actions/admin.actions";
+import { deletePost, updatePost } from "@/lib/actions/admin.actions";
 import {
   bikeSchema,
   carSchema,
@@ -15,12 +15,16 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
-function Item() {
+export const paramIdHandler = (id:Params) => id?.page.toString().split("-")[1];
+
+function Item({params} : {params : {page : string}}) {
   const id = useParams();
   const router = useRouter();
   const { data: session } = useSession();
-  const paramId = id?.page.toString().split("-")[1];
+  const paramId = paramIdHandler(id)
   const [postObj, setPostObj] = useState<
     commonPropertiesSchema & carSchema & propertySchema & bikeSchema
   >();
@@ -29,6 +33,7 @@ function Item() {
     await deletePost(paramId);
     router.push("/my-ads");
   };
+
   useEffect(() => {
     const fetchPost = async () => {
       const response = await fetchSinglePost(paramId);
@@ -55,8 +60,11 @@ function Item() {
       {/* Now i need to create for car,bike,property since they have their unique UI */}
 
       {session?.user?.name?.length ?? 0 > 1 ? (
+        // I need to add admin role feature otherwise anyone can delete it
         <>
+        <Link href={`${params.page}/update`}>
           <Button>Update</Button>
+        </Link>
           <Button onClick={deleteHandler}>Delete</Button>
         </>
       ) : null}

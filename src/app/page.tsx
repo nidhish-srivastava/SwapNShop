@@ -2,7 +2,6 @@
 import { useEffect,useState } from "react"
 import { commonPropertiesSchema, fetchAllPosts } from "@/lib/actions/post.actions";
 import Link from "next/link";
-import Image from "next/image";
 import PostCard from "@/components/PostCard";
 
   
@@ -66,7 +65,7 @@ import PostCard from "@/components/PostCard";
     <>
       <main className="flex mt-2 flex-col md:grid gap-2 md:grid-cols-3 w-[90%] mx-auto">
         {posts.map((item,index) => (
-          <Link href={`/item/${item?.title}-${item?._id}`} key={index}>
+          <Link href={`/item/${item?.title}-${item?._id}`} key={item?._id}>
             <PostCard postObj={item} />
           </Link>
         ))}

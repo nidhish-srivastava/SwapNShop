@@ -7,7 +7,7 @@ export type commonPropertiesSchema = {
     description : string
     title : string
     price : number
-    // images : {img:string,uploaded:boolean}[]
+    username : string | null | undefined
     images : string[]
     author : string | null | undefined
     state : string
@@ -55,27 +55,26 @@ const updateImages = (images : string[]) => {
     return updatedImages
 }
 
-export async function carCreatePost({year,fuel,transmission,kmDriven}:carSchema,{description,price,title,images,state,district,author,category}:commonPropertiesSchema){
-    console.log(category);
+export async function carCreatePost({year,fuel,transmission,kmDriven}:carSchema,{description,price,title,images,state,district,author,category,username}:commonPropertiesSchema){
     try {
-        // connectToDB()
-        // const newCarPost = new CarModel({
-        //     year:year,
-        //     // fuel:fuel,transmission:transmission,
-        //     kmDriven:kmDriven,
-        // title,description,price,location : {district : district,state:state},author,images : updateImages(images),category,
-        // })
-        // return newCarPost.save()
+        connectToDB()
+        const newCarPost = new CarModel({
+            year:year,
+            // fuel:fuel,transmission:transmission,
+            kmDriven:kmDriven,
+        title,description,price,location : {district : district,state:state},author,images : updateImages(images),category,username
+        })
+        return newCarPost.save()
     } catch (error) {
         
     }
 }
 
-export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,description,price,state,district,author,images,category}:commonPropertiesSchema){
+export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,description,price,state,district,author,images,category,username}:commonPropertiesSchema){
     try {
         connectToDB()
         const newBikePost = new BikeModel({
-        title,description,price,location : {district : district,state:state},author,images: updateImages(images),category,
+        title,description,price,location : {district : district,state:state},author,images: updateImages(images),category,username,
             brand,year,kmDriven
         })
         return newBikePost.save()
@@ -85,11 +84,11 @@ export async function bikeCreatePost({brand,year,kmDriven}:bikeSchema,{title,des
 }
 
 
-export async function mobileCreatePost({brand}:{brand : string},{title,description,price,author,state,district,images,category}:commonPropertiesSchema){
+export async function mobileCreatePost({brand}:{brand : string},{title,description,price,author,state,district,images,category,username}:commonPropertiesSchema){
   try {
     connectToDB()
     const newMobilePost = new MobileModel({
-        title,description,price,location : {district : district,state:state},author,images: updateImages(images),category,
+        title,description,price,location : {district : district,state:state},author,images: updateImages(images),category,username,
         brand
     })
     return newMobilePost.save()
@@ -98,11 +97,11 @@ export async function mobileCreatePost({brand}:{brand : string},{title,descripti
   }
 }
 
-export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName}:propertySchema,{title,images,description,price,author,state,district,category}:commonPropertiesSchema){
+export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName}:propertySchema,{title,images,description,price,author,state,district,category,username}:commonPropertiesSchema){
     try {
         connectToDB()
         const newPropertyPost = new PropertyModel({
-            title,description,price,location : {district : district,state:state},author,images: updateImages(images),category,
+            title,description,price,location : {district : district,state:state},author,images: updateImages(images),category,username,
             type,bedrooms,bathrooms,furnishing,constructionStatus,listedBy,superBuiltUpArea,carpetArea,maintenance,totalFloors,floorNo,carParking,facing,projectName
         })
         return newPropertyPost.save()
@@ -112,14 +111,14 @@ export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,con
 }
 
 
-export async function createPost({description,title,price,images,state,district,author,category} : commonPropertiesSchema){
+export async function createPost({description,title,price,images,state,district,author,category,username} : commonPropertiesSchema){
     // const updatedImages = images.filter(e=>{
     //     return e.includes("upload_zypu8w") ? "" : e
     // })
     try {
         connectToDB()
         const newPost = new PostModel({
-            title,description,price,location : {district : district,state:state},author,images: updateImages,category
+            title,description,price,location : {district : district,state:state},author,images: updateImages(images),category,username
         })
         try {
             return newPost.save()

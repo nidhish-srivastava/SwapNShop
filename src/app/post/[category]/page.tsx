@@ -69,7 +69,8 @@ function page() {
     price: 0,
     state: "",
     district: "",
-    author: session?.user?.name,
+    author: session?.user?.name?.split(" ")[0],
+    username : session?.user?.email?.split("@")[0],
     images: [userImg,userImg2,userImg3,userImg4,userImg5],
     category : decodedCategory
   });

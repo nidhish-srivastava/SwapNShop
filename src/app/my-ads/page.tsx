@@ -12,9 +12,9 @@ function MyAds() {
   const [myAdsState, setMyAdsState] = useState<commonPropertiesSchema[]>([]);
   useEffect(() => {
     const fetchMyAds = async () => {
-      const response = await myAds(session?.user?.name);
+      const response = await myAds(session?.user?.email?.split("@")[0]);
       setMyAdsState(response);
-    };
+    }
     fetchMyAds();
   }, []);
   return (
@@ -23,13 +23,13 @@ function MyAds() {
         <Link href={`/my-ads`}>
           <Button>My Ads</Button>
         </Link>
-        {/* <Link href={`/favorites`}> */}
+        <Link href={`/favorites`}>
         <Button>Favorites</Button>
-        {/* </Link> */}
+        </Link>
       </div>
       <main className="flex mt-2 flex-col md:grid gap-2 md:grid-cols-3 w-[90%] mx-auto">
         {myAdsState.map((item, index) => (
-          <Link href={`/item/${item?.title}-${item?._id}`} key={index}>
+          <Link href={`/item/${item?.title}-${item?._id}`} key={item._id}>
             <PostCard postObj={item} />
           </Link>
         ))}
