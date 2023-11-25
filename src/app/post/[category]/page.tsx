@@ -28,6 +28,7 @@ import {
 } from "@/lib/actions/post.actions";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
+import Loading from "@/components/Loading";
 const uploadImage =
   "https://res.cloudinary.com/dvlz73wcr/image/upload/v1700581072/upload_zypu8w.jpg";
 
@@ -37,6 +38,12 @@ function page() {
   const params = useParams();
   const { data: session } = useSession();
   // const defaultImg = { img: uploadImage, uploaded: false };
+  const [picLoading, setPicLoading] = useState(false);
+  const [picLoading2, setPicLoading2] = useState(false);
+  const [picLoading3, setPicLoading3] = useState(false);
+  const [picLoading4, setPicLoading4] = useState(false);
+  const [picLoading5, setPicLoading5] = useState(false);
+
   const [userImg, setUserImg] = useState(uploadImage);
   const [userImg2, setUserImg2] = useState(uploadImage);
   const [userImg3, setUserImg3] = useState(uploadImage);
@@ -47,29 +54,13 @@ function page() {
   
   let category = params.category;
   const decodedCategory = decodeURIComponent(category as string);
-
-  // const imagesArray = [userImg, userImg2, userImg3, userImg4, userImg5];
-
-  const filter = () => {
-    // console.log(userImg2);
-    
-    // const updated = imagesArray.map((e) => {
-    //   if (e.uploaded == false) {
-    //     return { ...e, img: "" };
-    //   }
-    //   return e;
-    // });
-    // setFormData((prev)=>({...prev,images : updated}))
-  }
-  
-  // const [picLoading, setPicLoading] = useState(false);
   const [formData, setFormData] = useState<commonPropertiesSchema>({
     title: "",
     description: "",
     price: 0,
     state: "",
     district: "",
-    author: session?.user?.name?.split(" ")[0],
+    author: session?.user?.name,
     username : session?.user?.email?.split("@")[0],
     images: [userImg,userImg2,userImg3,userImg4,userImg5],
     category : decodedCategory
@@ -136,7 +127,7 @@ function page() {
     }
   };
 
-  const imageUpload = (setUserImg: any) => {
+  const imageUpload = (setUserImg: any,setPicLoading : any) => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/*";
@@ -160,7 +151,7 @@ function page() {
           data.append("file", file);
           data.append("upload_preset", "chat-app");
           data.append("cloud_name", "dvlz73wcr");
-          // setPicLoading(true);
+          setPicLoading(true);
         fetch("https://api.cloudinary.com/v1_1/dvlz73wcr/image/upload", {
           method: "post",
           body: data,
@@ -171,17 +162,17 @@ function page() {
               data.url,
           );
             // console.log(data);
-            // setPicLoading(false);
+            setPicLoading(false);
           })
           .catch((err) => {
             console.log(err);
-            // setPicLoading(false);
+            setPicLoading(false);
           });
       } else {
         toast({
           description: "Please select and image",
         });
-        // setPicLoading(false);
+        setPicLoading(false);
       }
     };
     // simulate a click
@@ -351,7 +342,9 @@ function page() {
             UPLOAD upto 5 photos
           </h2>
           <div className="grid grid-cols-3 max-w-[90%] mx-auto place-items-center">
-            <div className="" onClick={() => imageUpload(setUserImg)}>
+            {
+              picLoading ? <Loading/>
+             : <div className="" onClick={() => imageUpload(setUserImg,setPicLoading)}>
               {
                <Image
                   src={userImg}
@@ -361,7 +354,10 @@ function page() {
                 />
               }
             </div>
-            <div onClick={() => imageUpload(setUserImg2)}>
+            }
+            {
+              picLoading2 ? <Loading/> : 
+            <div onClick={() => imageUpload(setUserImg2,setPicLoading2)}>
               {
                <Image
                   src={userImg2}
@@ -371,7 +367,10 @@ function page() {
                 />
               }
             </div>
-            <div onClick={() => imageUpload(setUserImg3)}>
+            }
+            {
+              picLoading3 ? <Loading/> : 
+            <div onClick={() => imageUpload(setUserImg3,setPicLoading3)}>
               {
                <Image
                   src={userImg3}
@@ -381,7 +380,10 @@ function page() {
                 />
               }
             </div>
-            <div onClick={() => imageUpload(setUserImg4)}>
+            }
+            {
+              picLoading4 ? <Loading/> : 
+            <div onClick={() => imageUpload(setUserImg4,setPicLoading4)}>
               {
                <Image
                   src={userImg4}
@@ -391,7 +393,10 @@ function page() {
                 />
               }
             </div>
-            <div onClick={() => imageUpload(setUserImg5)}>
+            }
+            {
+              picLoading5 ? <Loading/> : 
+            <div onClick={() => imageUpload(setUserImg5,setPicLoading5)}>
               {
                <Image
                   src={userImg5}
@@ -401,6 +406,7 @@ function page() {
                 />
               }
             </div>
+            }
           </div>
         </div>
         <hr />

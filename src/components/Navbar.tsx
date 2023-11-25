@@ -4,7 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
 const fontMontserrat = Montserrat({ subsets: ["latin"] });
-import { Search, MessageCircle, MapPin,MoveDown,ChevronDown } from "lucide-react";
+import { Search, MessageCircle, MapPin,ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,

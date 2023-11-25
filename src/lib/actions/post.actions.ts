@@ -112,9 +112,6 @@ export async function propertyCreatePost({type,bedrooms,bathrooms,furnishing,con
 
 
 export async function createPost({description,title,price,images,state,district,author,category,username} : commonPropertiesSchema){
-    // const updatedImages = images.filter(e=>{
-    //     return e.includes("upload_zypu8w") ? "" : e
-    // })
     try {
         connectToDB()
         const newPost = new PostModel({

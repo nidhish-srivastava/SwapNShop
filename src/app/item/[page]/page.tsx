@@ -1,6 +1,4 @@
 "use client";
-import { ToastAction } from "@/components/ui/toast";
-import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { deletePost, updatePost } from "@/lib/actions/admin.actions";
 import {
