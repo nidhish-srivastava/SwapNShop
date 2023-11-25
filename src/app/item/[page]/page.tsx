@@ -60,10 +60,16 @@ function Item({params} : {params : {page : string}}) {
       {session?.user?.name?.length ?? 0 > 1 ? (
         // I need to add admin role feature otherwise anyone can delete it
         <>
+        {
+          postObj?.username == session?.user?.email?.split("@")[0]
+          ? <>
         <Link href={`${params.page}/update`}>
           <Button>Update</Button>
         </Link>
           <Button onClick={deleteHandler}>Delete</Button>
+        </>
+          : null
+        }
         </>
       ) : null}
     </main>
