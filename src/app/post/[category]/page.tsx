@@ -28,6 +28,7 @@ import {
 } from "@/lib/actions/post.actions";
 import { useSession } from "next-auth/react";
 import Loading from "@/components/Loading";
+import { filterUsername } from "@/lib/utils";
 const uploadImage =
   "https://res.cloudinary.com/dvlz73wcr/image/upload/v1700581072/upload_zypu8w.jpg";
 
@@ -59,7 +60,7 @@ function page() {
     state: "",
     district: "",
     author: session?.user?.name,
-    username : session?.user?.email?.split("@")[0],
+    username : filterUsername(session?.user?.email),
     images: [userImg,userImg2,userImg3,userImg4,userImg5],
     category : decodedCategory
   });

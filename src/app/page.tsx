@@ -1,7 +1,6 @@
 "use client"
 import { useEffect,useState } from "react"
 import { commonPropertiesSchema, fetchAllPosts } from "@/lib/actions/post.actions";
-import Link from "next/link";
 import PostCard from "@/components/PostCard";
 import PostsWrapper from "@/components/PostsWrapper";
 
@@ -66,9 +65,7 @@ import PostsWrapper from "@/components/PostsWrapper";
     <>
         <PostsWrapper>
         {posts.map((item,index) => (
-          <Link href={`/item/${item?.title}-${item?._id}`} key={item?._id}>
             <PostCard postObj={item} />
-          </Link>
         ))}
         </PostsWrapper>
     </>

@@ -28,19 +28,23 @@ export async function addToFavorites(userId : string,postId : string){
     }
 }
 
-export async function checkIfAddedInFavorites(userId : string,postId : string){
+export async function checkIfAddedInFavorites(userId : string | null | undefined,postId : string){
     try {
         const user = await UserModel.findOne({username : userId})
-        const check = user.favoritePosts.some((favpostId:string)=>favpostId==postId)
+        const check = user.favoritePosts
+        .some((favpostId:string)=>favpostId==postId)
         return check
         } catch (error) {
         
     }
 }
 
-export async function fetchAllFavorites(userId : string){
+export async function fetchAllFavorites(username : string | undefined){
   try {
-    
+    const response = await UserModel.findOne({username : username})
+    const favPostsIdsArray = response.favoritePosts
+    const fetchPosts = await PostModel.find({_id : {$in : favPostsIdsArray}})
+    return JSON.parse(JSON.stringify(fetchPosts))
   } catch (error) {
     
   }

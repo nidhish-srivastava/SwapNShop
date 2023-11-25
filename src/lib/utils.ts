@@ -16,6 +16,10 @@ export function cn(...inputs: ClassValue[]) {
 //   selected : false
 // },
 
+export const filterUsername = (username : string | null | undefined) =>{
+  return username?.split("@")[0]
+}
+
 export const fieldButtons = [
   {
     label: "Type",

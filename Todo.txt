@@ -1,7 +1,5 @@
 Create a modal for sign up rather than taking to a different url
 
-Create add to fav option in front end
-
-Add to fav and so on,create its apis
+Fetch all Fav using populate and shit
 
 Update Post api

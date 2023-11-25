@@ -7,15 +7,16 @@ import { commonPropertiesSchema } from "@/lib/actions/post.actions";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { filterUsername } from "@/lib/utils";
 
 function MyAds() {
   const { data: session } = useSession();
   const [myAdsState, setMyAdsState] = useState<commonPropertiesSchema[]>([]);
   useEffect(() => {
     const fetchMyAds = async () => {
-      const response = await myAds(session?.user?.email?.split("@")[0]);
+      const response = await myAds(filterUsername(session?.user?.email));
       setMyAdsState(response);
-    }
+    };
     fetchMyAds();
   }, []);
   return (
@@ -25,16 +26,14 @@ function MyAds() {
           <Button>My Ads</Button>
         </Link>
         <Link href={`/favorites`}>
-        <Button>Favorites</Button>
+          <Button>Favorites</Button>
         </Link>
       </div>
-        <PostsWrapper>
+      <PostsWrapper>
         {myAdsState.map((item, index) => (
-          <Link href={`/item/${item?.title}-${item?._id}`} key={item._id}>
             <PostCard postObj={item} />
-          </Link>
         ))}
-        </PostsWrapper>
+      </PostsWrapper>
     </div>
   );
 }
