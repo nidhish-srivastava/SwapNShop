@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, {  useEffect, useState } from "react";
 import Image from "next/image";
-import Cars from "@/components/postForm/Cars";
+import Cars from "@/components/adForm/Cars";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import DropDown from "@/components/postForm/DropDown";
-import Bikes from "@/components/postForm/Bikes";
-import Properties from "@/components/postForm/Properties";
+import DropDown from "@/components/adForm/DropDown";
+import Bikes from "@/components/adForm/Bikes";
+import Properties from "@/components/adForm/Properties";
 import { Roboto } from "next/font/google";
 import { Label } from "@/components/ui/label";
 const roboto = Roboto({ weight: "500", subsets: ["latin"] });
@@ -27,14 +27,12 @@ import {
   propertySchema,
 } from "@/lib/actions/post.actions";
 import { useSession } from "next-auth/react";
-import { useToast } from "@/components/ui/use-toast";
 import Loading from "@/components/Loading";
 const uploadImage =
   "https://res.cloudinary.com/dvlz73wcr/image/upload/v1700581072/upload_zypu8w.jpg";
 
 
 function page() {
-  const { toast } = useToast();
   const params = useParams();
   const { data: session } = useSession();
   // const defaultImg = { img: uploadImage, uploaded: false };
@@ -135,10 +133,7 @@ function page() {
     fileInput.onchange = (event: any) => {
       const file = event.target.files[0];
       if (file == undefined) {
-        toast({
-          // title: "Scheduled: Catch up",
-          description: "You havent uploaded the picture",
-        });
+    
       }
       
       if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
@@ -169,9 +164,7 @@ function page() {
             setPicLoading(false);
           });
       } else {
-        toast({
-          description: "Please select and image",
-        });
+      
         setPicLoading(false);
       }
     };
