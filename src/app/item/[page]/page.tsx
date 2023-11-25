@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { deletePost, updatePost } from "@/lib/actions/admin.actions";
+import { addToFavorites, checkIfAddedInFavorites, deletePost, updatePost } from "@/lib/actions/admin.actions";
 import {
   bikeSchema,
   carSchema,
@@ -9,7 +9,6 @@ import {
   propertySchema,
 } from "@/lib/actions/post.actions";
 import Image from "next/image";
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -19,10 +18,10 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 export const paramIdHandler = (id:Params) => id?.page.toString().split("-")[1];
 
 function Item({params} : {params : {page : string}}) {
-  const id = useParams();
   const router = useRouter();
   const { data: session } = useSession();
-  const paramId = paramIdHandler(id)
+  const paramId = paramIdHandler(params)
+  const [isAdded,setIsAdded] = useState(false)
   const [postObj, setPostObj] = useState<
     commonPropertiesSchema & carSchema & propertySchema & bikeSchema
   >();
@@ -32,10 +31,27 @@ function Item({params} : {params : {page : string}}) {
     router.push("/my-ads");
   };
 
+  const addToFavoritesHandler = async(userId:string,postId : string) =>{
+    try {
+      const response = await addToFavorites(userId,postId)
+      if(response==true){
+        setIsAdded(true)
+      }
+    } catch (error) {
+      
+    }
+  }
+
+  
+
   useEffect(() => {
     const fetchPost = async () => {
       const response = await fetchSinglePost(paramId);
       setPostObj(response);
+      const check =  await checkIfAddedInFavorites(response.username,response._id)
+      if(check){
+        setIsAdded(true)
+      }
     };
     fetchPost();
   }, []);
@@ -57,6 +73,12 @@ function Item({params} : {params : {page : string}}) {
       </span>
       {/* Now i need to create for car,bike,property since they have their unique UI */}
 
+      {isAdded ? <Button>Added to Favorites</Button>
+      :   
+      <Button onClick={()=>addToFavoritesHandler(postObj?.username as string,postObj?._id as string)}>
+        Add to Favorites
+      </Button>
+    }
       {session?.user?.name?.length ?? 0 > 1 ? (
         // I need to add admin role feature otherwise anyone can delete it
         <>

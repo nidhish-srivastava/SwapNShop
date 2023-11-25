@@ -3,6 +3,7 @@ import { useEffect,useState } from "react"
 import { commonPropertiesSchema, fetchAllPosts } from "@/lib/actions/post.actions";
 import Link from "next/link";
 import PostCard from "@/components/PostCard";
+import PostsWrapper from "@/components/PostsWrapper";
 
   
   function Page() {
@@ -63,13 +64,13 @@ import PostCard from "@/components/PostCard";
 
     return (
     <>
-      <main className="flex mt-2 flex-col md:grid gap-2 md:grid-cols-3 w-[90%] mx-auto">
+        <PostsWrapper>
         {posts.map((item,index) => (
           <Link href={`/item/${item?.title}-${item?._id}`} key={item?._id}>
             <PostCard postObj={item} />
           </Link>
         ))}
-      </main>
+        </PostsWrapper>
     </>
   );
   

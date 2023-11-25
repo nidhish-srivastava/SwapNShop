@@ -1,3 +1,4 @@
+import PostsWrapper from "@/components/PostsWrapper"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 function Favorites() {
@@ -11,6 +12,9 @@ function Favorites() {
         <Button>Favorites</Button>
         </Link>
       </div>
+      <PostsWrapper>
+        
+      </PostsWrapper>
       
     </div>
   )

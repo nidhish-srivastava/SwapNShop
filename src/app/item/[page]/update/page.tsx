@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
 import { paramIdHandler } from "../page";
 import { fetchSinglePost } from "@/lib/actions/post.actions";
 import {
@@ -10,12 +9,11 @@ import {
   bikeSchema,
 } from "@/lib/actions/post.actions";
 
-function Update() {
-  const id = useParams();
+function Update({params} : {params : {page : string}}) {
   const [postObj, setPostObj] = useState<
-    commonPropertiesSchema & carSchema & propertySchema & bikeSchema
+  commonPropertiesSchema & carSchema & propertySchema & bikeSchema
   >();
-  const paramId = paramIdHandler(id);
+  const paramId = paramIdHandler(params);
   useEffect(() => {
     const fetchPost = async () => {
       const response = await fetchSinglePost(paramId);
@@ -23,7 +21,9 @@ function Update() {
     };
     fetchPost();
   }, []);
-  return <div></div>;
+  return <div>
+    
+  </div>;
 }
 
 export default Update;
