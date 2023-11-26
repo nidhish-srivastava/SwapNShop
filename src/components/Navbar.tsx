@@ -85,7 +85,7 @@ export default function NavMenu() {
                 <DropdownMenuContent>
                   <DropdownMenuLabel>{session.user?.name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <Link href={`${session.user?.name}`}>
+                  <Link href={`/${session.user?.name}`}>
                     <DropdownMenuItem>View Profile</DropdownMenuItem>
                   </Link>
                   <Link href={`/my-ads`}>

@@ -4,6 +4,7 @@ import {
   addToFavorites,
   checkIfAddedInFavorites,
   deletePost,
+  removeFromFav,
   updatePost,
 } from "@/lib/actions/admin.actions";
 import {
@@ -13,6 +14,7 @@ import {
   fetchSinglePost,
   propertySchema,
 } from "@/lib/actions/post.actions";
+import toast, { Toaster } from 'react-hot-toast';
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -40,11 +42,24 @@ function Item({ params }: { params: { page: string } }) {
   const addToFavoritesHandler = async (userId: string, postId: string) => {
     try {
       const response = await addToFavorites(userId, postId);
-      if (response == true) {
+      if (response) {
         setIsAdded(true);
+        toast.success("Added to Favorites")
       }
     } catch (error) {}
   };
+
+  const removeFromFavHandler = async(postId : string | undefined)=>{
+    try {
+      const response : any = await removeFromFav(filterUsername(session?.user?.email),postId as string)
+      if(response){
+        setIsAdded(false)
+        toast.success("Removed from Favorites")        
+      }
+    } catch (error) {
+      
+    }
+  }
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -72,6 +87,7 @@ function Item({ params }: { params: { page: string } }) {
   }, []);
   return (
     <main>
+      <Toaster/>
       <h1>{postObj?.title}</h1>
       <div>
         {postObj?.images.map((e) => (
@@ -92,12 +108,12 @@ function Item({ params }: { params: { page: string } }) {
           {filterUsername(session?.user?.email) != postObj?.username ? (
             <>
               {isAdded ? (
-                <Button>Added to Favorites</Button>
+                <Button onClick={()=>removeFromFavHandler(postObj?._id)}>Remove from Favorites</Button>
               ) : (
                 <Button
                   onClick={() =>
                     addToFavoritesHandler(
-                      postObj?.username as string,
+                      filterUsername(session?.user?.email) as string,
                       postObj?._id as string
                     )
                   }

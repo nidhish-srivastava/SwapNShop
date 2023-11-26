@@ -49,3 +49,14 @@ export async function fetchAllFavorites(username : string | undefined){
     
   }
 }
+
+export async function removeFromFav(username:string | undefined,postId : string) {
+    try {
+    const response = await UserModel.updateOne({username : username},{$pull : {favoritePosts : postId}})
+    if(response.modifiedCount > 0){
+        return true
+    }
+    } catch (error) {
+        
+    }
+}
