@@ -3,6 +3,7 @@ import { useEffect,useState } from "react"
 import { commonPropertiesSchema, fetchAllPosts } from "@/lib/actions/post.actions";
 import PostCard from "@/components/PostCard";
 import PostsWrapper from "@/components/PostsWrapper";
+import Link from "next/link";
 
   
   function Page() {
@@ -64,9 +65,11 @@ import PostsWrapper from "@/components/PostsWrapper";
     return (
     <>
         <PostsWrapper>
-        {posts.map((item,index) => (
+        {posts.map((item,index) =>{
+          return(
             <PostCard postObj={item} />
-        ))}
+            ) 
+        })}
         </PostsWrapper>
     </>
   );

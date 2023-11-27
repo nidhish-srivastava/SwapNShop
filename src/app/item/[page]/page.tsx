@@ -23,7 +23,10 @@ import Link from "next/link";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { filterUsername } from "@/lib/utils";
 
-export const paramIdHandler = (id: Params) => id?.page.toString().split("-")[1];
+export const paramIdHandler = (id: Params) => {
+  const arrStr = id?.page.toString().split("-")
+  return arrStr[arrStr.length-1]
+}
 
 function Item({ params }: { params: { page: string } }) {
   const router = useRouter();
@@ -85,6 +88,44 @@ function Item({ params }: { params: { page: string } }) {
     };
     fetchPost();
   }, []);
+
+    const renderExtraFields = (postObj : any)=>{
+      const category = postObj?.category
+      if(category=="Cars"){
+        return(
+          <>
+          <h3>{postObj.year}</h3>
+          <h3>{postObj.fuel}</h3>
+          <h3>{postObj.transmission}</h3>
+          <h3>{postObj.kmDriven}</h3>
+          </>
+        )
+      }
+      if(category=="Bikes"){
+        return(
+          <>
+          <h3>{postObj.brand}</h3>
+          <h3>{postObj.year}</h3>
+          <h3>{postObj.kmDriven}</h3>
+          </>
+        )
+      }
+      if(category=="Mobiles"){
+        return(
+          <>
+          <h3>{postObj.brand}</h3>
+          </>
+        )
+      }
+      if(category=="Properties"){
+        return(
+          <>
+          
+          </>
+        )
+      }
+    }
+
   return (
     <main>
       <Toaster/>
@@ -99,6 +140,7 @@ function Item({ params }: { params: { page: string } }) {
       <p>{postObj?.description}</p>
       <h2>{postObj?.price}</h2>
       <h3>{postObj?.author}</h3>
+      {renderExtraFields(postObj)}
       <span>
         {postObj?.location?.district},{postObj?.location?.state}
       </span>
@@ -143,3 +185,4 @@ function Item({ params }: { params: { page: string } }) {
 }
 
 export default Item;
+

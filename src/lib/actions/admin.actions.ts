@@ -7,7 +7,12 @@ export async function updatePost(id : string) {
 }
 
 export async function deletePost(id : string){
-    await PostModel.findByIdAndDelete(id)
+    try {
+        await PostModel.findByIdAndDelete(id)
+        
+    } catch (error) {
+        
+    }
 }
 
 export async function myAds(username:string | null | undefined){

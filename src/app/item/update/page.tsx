@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { paramIdHandler } from "../page";
+import { paramIdHandler } from "../[page]/page";
 import { fetchSinglePost } from "@/lib/actions/post.actions";
 import {
   commonPropertiesSchema,

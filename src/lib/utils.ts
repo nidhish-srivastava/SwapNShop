@@ -16,6 +16,11 @@ export function cn(...inputs: ClassValue[]) {
 //   selected : false
 // },
 
+  
+export  const decodeCategoryHandler = (category:string)=>{
+  return decodeURIComponent(category)
+}
+
 export const filterUsername = (username : string | null | undefined) =>{
   return username?.split("@")[0]
 }
