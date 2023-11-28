@@ -4,6 +4,8 @@ import { commonPropertiesSchema, fetchAllPosts } from "@/lib/actions/post.action
 import PostCard from "@/components/PostCard";
 import PostsWrapper from "@/components/PostsWrapper";
 import Link from "next/link";
+import { categories } from "./post/page";
+import CategoryHomePage from "@/components/CategoryHomePage";
 
   
   function Page() {
@@ -64,6 +66,7 @@ import Link from "next/link";
 
     return (
     <>
+  <CategoryHomePage/>
         <PostsWrapper>
         {posts.map((item,index) =>{
           return(

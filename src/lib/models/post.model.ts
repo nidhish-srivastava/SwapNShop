@@ -21,6 +21,8 @@ const commonPropertiesSchema = new mongoose.Schema({
       required: true,
     },
   },
+},{
+  timestamps : true
 });
 
 const CarSchema = commonPropertiesSchema.discriminator("Car", {

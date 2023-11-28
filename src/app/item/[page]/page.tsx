@@ -139,6 +139,13 @@ function Item({ params }: { params: { page: string } }) {
       }
     }
 
+    const getFullDate = (inputDate : string)=>{
+      const date = new Date(inputDate)
+      const options:any = { day: 'numeric', month: 'short', year: 'numeric' };
+      const formattedDate = date.toLocaleDateString('en-US',options)
+      return formattedDate
+    }
+
   return (
     <main>
       <Toaster/>
@@ -152,6 +159,7 @@ function Item({ params }: { params: { page: string } }) {
       </div>
       <p>{postObj?.description}</p>
       <h2>{postObj?.price}</h2>
+      <h3>Posting Date : {getFullDate(postObj?.createdAt as string)}</h3>
       <h3>{postObj?.author}</h3>
       <div>
         <h3>Details</h3>
@@ -160,6 +168,7 @@ function Item({ params }: { params: { page: string } }) {
         </div>
       </div>
       <span>
+        Location : 
         {postObj?.location?.district},{postObj?.location?.state}
       </span>
       {/* Now i need to create for car,bike,property since they have their unique UI */}

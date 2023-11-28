@@ -10,7 +10,7 @@ type categories = {
   selected : false | true
 }
 
-const categories = [
+export const categories = [
   { name: "Cars",icons: <CarFront />, selected : false },
   { name: "Bikes", icons: <Bike />, selected : false },
   { name: "Mobiles", icons:<Smartphone />, selected : false },

@@ -15,6 +15,7 @@ export type commonPropertiesSchema = {
     district : string
     category : string
     _id?:string
+    createdAt ?: string
 }
 
 export type carSchema = {
@@ -130,7 +131,7 @@ export async function createPost({description,title,price,images,state,district,
 export async function fetchAllPosts(pageNumber:number){
     try {
         connectToDB()
-        const allPosts = await PostModel.find({})
+        const allPosts = await PostModel.find().sort({createdAt : -1})
         const page = pageNumber || 1
         const pageSize = 20
         const startIndex = (page-1)*pageSize

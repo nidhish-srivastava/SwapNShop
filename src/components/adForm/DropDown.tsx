@@ -88,7 +88,6 @@ function DropDowns({ label, value, setValue, setMobileBrandValue,  setProperties
         className="select"
         value={value}
         onChange={changeHandler}
-
       >
         {dropdown
           .find((e) => e.label == label)

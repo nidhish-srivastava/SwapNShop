@@ -1,5 +1,13 @@
 Create a modal for sign up rather than taking to a different url
 
-Fetch all Fav using populate and shit
-
 Update Post api
+
+Chat
+
+RealTime GEoLocation api
+
+Search Functionality
+
+Search based on Category
+
+Form validation

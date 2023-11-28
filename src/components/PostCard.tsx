@@ -5,7 +5,28 @@ type Props = {
     postObj: commonPropertiesSchema
   };
 
+  const getRelativeDate = (inputDate:string)=>{
+    const currentDate : any = new Date();
+    const inputDateTime : any = new Date(inputDate);
+
+    const oneDayInMillis = 24 * 60 * 60 * 1000;
+    const daysDifference = Math.floor((currentDate - inputDateTime) / oneDayInMillis);
+
+    if (currentDate.toDateString() === inputDateTime.toDateString()) {
+        return "today";
+    } else if (daysDifference === 1) {
+        return "yesterday";
+    } else if (daysDifference <= 6) {
+        return `${daysDifference} days ago`;
+    } else if (daysDifference <= 13) {
+        return "1 week ago";
+    } else {
+        const options = { month: 'long', day: 'numeric' };
+        return inputDateTime.toLocaleDateString(undefined, options);
+    }
+  }
 function PostCard({postObj} : Props) {
+
   let modifiedTitle = postObj.title.split(" ").join("-")
   modifiedTitle = modifiedTitle.replace(/[0-9]+%\s?/g, '');
   return (
@@ -22,6 +43,7 @@ function PostCard({postObj} : Props) {
     <h3>
     {postObj?.location?.district} , {postObj?.location?.state}
     </h3>
+    <h4>{getRelativeDate(postObj.createdAt as string)}</h4>
     </div>
     </Link>
   )
