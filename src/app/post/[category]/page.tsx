@@ -415,6 +415,7 @@ function page() {
               className="select"
               onChange={selectLocation}
               value={formData.state}
+              required={true}
             >
               {states.map((e, i) => (
                 <option value={e.state}>{e.state}</option>
@@ -432,6 +433,7 @@ function page() {
                   name="district"
                   value={formData.district}
                   onChange={selectLocation}
+                  required={true}
                 >
                   {states
                     .find((e) => e.state == formData.state)

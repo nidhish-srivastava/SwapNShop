@@ -83,10 +83,12 @@ function DropDowns({ label, value, setValue, setMobileBrandValue,  setProperties
     <>
       <Label htmlFor="dropdown">{label}*</Label>
       <select
+      required={true}
         id="dropdown"
         className="select"
         value={value}
         onChange={changeHandler}
+
       >
         {dropdown
           .find((e) => e.label == label)

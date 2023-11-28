@@ -56,7 +56,6 @@ function PropertyFieldButtons({ label, setCarsFormData, setPropertiesFormData }:
         return ({...prev,bathrooms : e})
       }
       if(label=="Furnishing"){
-
         return ({...prev,furnishing : e})
       }
       if(label=="Construction Status"){

@@ -94,33 +94,46 @@ function Item({ params }: { params: { page: string } }) {
       if(category=="Cars"){
         return(
           <>
-          <h3>{postObj.year}</h3>
-          <h3>{postObj.fuel}</h3>
-          <h3>{postObj.transmission}</h3>
-          <h3>{postObj.kmDriven}</h3>
+          <h3>Year : {postObj.year}</h3>
+          <h3>Fuel : {postObj.fuel}</h3>
+          <h3>Transmission : {postObj.transmission}</h3>
+          <h3>KmDriven : {postObj.kmDriven}</h3>
           </>
         )
       }
       if(category=="Bikes"){
         return(
           <>
-          <h3>{postObj.brand}</h3>
-          <h3>{postObj.year}</h3>
-          <h3>{postObj.kmDriven}</h3>
+          <h3>Brand : {postObj.brand}</h3>
+          <h3>Year : {postObj.year}</h3>
+          <h3>KmDriven : {postObj.kmDriven}</h3>
           </>
         )
       }
       if(category=="Mobiles"){
         return(
           <>
-          <h3>{postObj.brand}</h3>
+          <h3>Brand : {postObj.brand}</h3>
           </>
         )
       }
       if(category=="Properties"){
         return(
           <>
-          
+          <h3>Type : {postObj.type}</h3>
+          <h3>Bedrooms : {postObj.bedrooms}</h3>
+          <h3>Bathrooms : {postObj.bathrooms}</h3>
+          <h3>Furnishing : {postObj.furnishing}</h3>
+          <h3>ConstructionStatus : {postObj.constructionStatus}</h3>
+          <h3>ListedBy : {postObj.listedBy}</h3>
+          <h3>SuperBuiltUp Area : {postObj.superBuiltUpArea}</h3>
+          <h3>Carpet Area : {postObj.carpetArea}</h3>
+          <h3>Maintenance : {postObj.maintenance}</h3>
+          <h3>Total Floors : {postObj.totalFloors}</h3>
+          <h3>Floor No : {postObj.floorNo}</h3>
+          <h3>Car Parking : {postObj.carParking}</h3>
+          <h3>Facing : {postObj.facing}</h3>
+          <h3>Project Name : {postObj.projectName}</h3>
           </>
         )
       }
@@ -140,7 +153,12 @@ function Item({ params }: { params: { page: string } }) {
       <p>{postObj?.description}</p>
       <h2>{postObj?.price}</h2>
       <h3>{postObj?.author}</h3>
+      <div>
+        <h3>Details</h3>
+        <div>
       {renderExtraFields(postObj)}
+        </div>
+      </div>
       <span>
         {postObj?.location?.district},{postObj?.location?.state}
       </span>
