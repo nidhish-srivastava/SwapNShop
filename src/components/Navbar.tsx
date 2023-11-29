@@ -16,9 +16,11 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { usePathname } from "next/navigation";
+import { useRef } from "react";
 
 
 export default function NavMenu() {
+  const searchRef = useRef<HTMLInputElement>(null)
   const pathname = usePathname()
     let show = pathname.split('/').includes("post")
   const { data: session } = useSession();
@@ -48,7 +50,7 @@ export default function NavMenu() {
         </span>
         <div className=" md:flex md:w-[25%] hidden border  rounded-full py-0 px-2 items-center">
           <Search />
-          <Input className="border-none" type="search" placeholder="Location" />
+          <Input ref={searchRef} className="border-none" type="search" placeholder="Location" />
           <ChevronDown />
         </div>
         <div

@@ -4,10 +4,6 @@ Update Post api
 
 Chat
 
-RealTime GEoLocation api
-
-Search Functionality
-
-Search based on Category
+Search Functionality based on Location
 
 Form validation

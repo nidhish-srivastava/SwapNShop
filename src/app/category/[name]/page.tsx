@@ -1,4 +1,5 @@
 "use client"
+import CustomDropdown from "@/components/CustomDropDown"
 import PostCard from "@/components/PostCard"
 import PostsWrapper from "@/components/PostsWrapper"
 import { commonPropertiesSchema, fetchCategoryPosts, sortPostsHighToLow, sortPostsLowToHigh } from "@/lib/actions/post.actions"
@@ -8,7 +9,6 @@ import { useEffect, useState } from "react"
   const [categoryPosts,setCategoryPosts] = useState<commonPropertiesSchema[]>([])
   const [countPosts,setCountPosts] = useState<number | undefined>(0)
   const decodedCategory = params.name.split("-").join(" ")
-  const [show,setShow] = useState(false)
 
   const priceHighToLowSortHandler = async()=>{
     const response = await sortPostsHighToLow(decodedCategory)
@@ -18,27 +18,24 @@ import { useEffect, useState } from "react"
     const response = await sortPostsLowToHigh(decodedCategory)
     setCategoryPosts(response)
   }
-  useEffect(()=>{
-    const fetchCategoryItems = async() =>{
-      try {
-        const response = await fetchCategoryPosts(decodedCategory)
-        setCountPosts(response?.count)
+  const fetchCategoryItemsHandler = async() =>{
+    try {
+      const response = await fetchCategoryPosts(decodedCategory)
+      setCountPosts(response?.count)
         setCategoryPosts(response?.returnResponse)
       } catch (error) {
       }
     }
-    fetchCategoryItems()
+    useEffect(()=>{
+    fetchCategoryItemsHandler()
   },[])
+  const sortOptions = ["Date Published","Price(Low to High)","Price(High to Low)"]
   return (
     <>
     Sort By 
-    <div className="flex flex-col cursor-pointer">
-      <span>Date Published</span>
-      <span onClick={priceLowToHighSortHandler}>Price(low to high)</span>
-      <span onClick={priceHighToLowSortHandler}>Price(high to low)</span>
-      <span>Relevance</span>
-      <span>Distance</span>
-    </div>
+      <div className="w-[30%]">
+      <CustomDropdown options={sortOptions} datePublished={fetchCategoryItemsHandler} lowToHigh={priceLowToHighSortHandler} highToLow={priceHighToLowSortHandler}/>
+      </div>
     <h3>
     {countPosts} Posts
     </h3>

@@ -13,7 +13,6 @@ import CategoryHomePage from "@/components/CategoryHomePage";
     useEffect(() => {
       const fetchItems = async () => {
         const result = await fetchAllPosts(pageNumber);
-        // console.log(result);
         setPosts((e)=>[...e,...result?.itemsToSend]);
         setTotalPages(result.totalPages);
       };
@@ -44,22 +43,6 @@ import CategoryHomePage from "@/components/CategoryHomePage";
       };
     }, [onLoadMore]);
   
-  
-  // useEffect(() => {
-    //   if (typeof window !== 'undefined' && window.navigator) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         // Handle successful position retrieval
-  //         const { latitude, longitude } = position.coords;
-  //         console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-  //       },
-  //       (error) => {
-  //         // Handle error
-  //         console.error(`Error getting location: ${error.message}`);
-  //       }
-  //     );
-  //   }
-  // }, []); 
 
     return (
     <>
