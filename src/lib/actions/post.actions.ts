@@ -128,6 +128,10 @@ export async function createPost({description,title,price,images,state,district,
     }
 }
 
+const plainObjConverter = (obj:any) =>{
+    return JSON.parse(JSON.stringify(obj))
+}
+
 export async function fetchAllPosts(pageNumber:number){
     try {
         connectToDB()
@@ -139,7 +143,7 @@ export async function fetchAllPosts(pageNumber:number){
         const itemsToSend = allPosts.slice(startIndex,endIndex)
         // console.log(itemsToSend.length);
         const result =  {itemsToSend,totalPages : Math.ceil(allPosts.length/pageSize)}
-        return JSON.parse(JSON.stringify(result))
+        return plainObjConverter(result)
     } catch (error) {
         
     }
@@ -149,7 +153,7 @@ export async function fetchSinglePost(id:string){
     try {
         connectToDB()
         const response = await PostModel.findById(id)
-        return JSON.parse(JSON.stringify(response))
+        return plainObjConverter(response)
     } catch (error) {
         
     }
@@ -158,8 +162,29 @@ export async function fetchSinglePost(id:string){
 export async function fetchCategoryPosts(category:string){
     try {
         connectToDB()
-        const response = await PostModel.find({category : category})
-        return JSON.parse(JSON.stringify(response))
+        const response = await PostModel.find({category : category}).sort({createdAt : -1})
+        const count = await PostModel.find({category : category}).count()
+        const returnResponse = plainObjConverter(response)
+        return {returnResponse,count}
+    } catch (error) {
+        
+    }
+}
+
+export async function sortPostsHighToLow(category:string){
+    try {
+        connectToDB()
+        const response = await PostModel.find({category : category}).sort({price : -1})
+        return plainObjConverter(response)
+    } catch (error) {
+        
+    }
+}
+export async function sortPostsLowToHigh(category:string){
+    try {
+        connectToDB()
+        const response = await PostModel.find({category : category}).sort({price : 1})
+        return plainObjConverter(response)
     } catch (error) {
         
     }

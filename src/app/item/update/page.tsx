@@ -19,11 +19,11 @@ function Update({params} : {params : {page : string}}) {
       const response = await fetchSinglePost(paramId);
       setPostObj(response);
     };
-    fetchPost();
-  }, []);
-  return <div>
+    fetchPost()
+  }, [])
+  return<div>
     
-  </div>;
+  </div>
 }
 
 export default Update;
