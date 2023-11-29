@@ -29,7 +29,7 @@ import { useEffect, useState } from "react"
     useEffect(()=>{
     fetchCategoryItemsHandler()
   },[])
-  const sortOptions = ["Date Published","Price(Low to High)","Price(High to Low)"]
+  const sortOptions = [{name : "Date Published",selected:false},{name : "Price(Low to High)",selected:false},{name : "Price(High to Low)",selected : false}]
   return (
     <>
     Sort By 

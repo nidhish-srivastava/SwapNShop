@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { Check } from 'lucide-react';
 
 type props = {
-    options : string[]
+    options : {
+      name : string
+      selected : boolean
+    }[]
     lowToHigh : ()=>void
     highToLow : ()=>void
     datePublished : ()=>void
@@ -66,9 +70,14 @@ const CustomDropdown = ({options,lowToHigh,highToLow,datePublished} : props) => 
                 key={index}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                 role="menuitem"
-                onClick={() => handleOptionClick(option)}
+                onClick={() => handleOptionClick(option.name)}
               >
-                {option}
+                <span className='flex justify-between items-center gap-2 cursor-pointer'>
+                {option.name}
+                {option.selected ? 
+                <Check size={16} strokeWidth={1.5} />
+                :null}
+                </span>
               </div>
             ))}
           </div>

@@ -35,7 +35,7 @@ function PropertyFieldButtons({ label, setCarsFormData, setPropertiesFormData }:
       } else {
         return fieldButton;
       }
-    });
+    })
   
     setFieldButtonsState(updatedFieldButtons);
     
