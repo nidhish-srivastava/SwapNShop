@@ -3,11 +3,8 @@ import { useEffect,useState } from "react"
 import { commonPropertiesSchema, fetchAllPosts } from "@/lib/actions/post.actions";
 import PostCard from "@/components/PostCard";
 import PostsWrapper from "@/components/PostsWrapper";
-import Link from "next/link";
-import { categories } from "./post/page";
 import CategoryHomePage from "@/components/CategoryHomePage";
 
-  
   function Page() {
     const [posts, setPosts] = useState<commonPropertiesSchema[]>([]);
     const [pageNumber, setPageNumber] = useState(1);

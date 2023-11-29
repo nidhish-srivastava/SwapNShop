@@ -10,17 +10,17 @@ type Props = {
     const inputDateTime : any = new Date(inputDate);
 
     const oneDayInMillis = 24 * 60 * 60 * 1000;
-    const daysDifference = Math.floor((currentDate - inputDateTime) / oneDayInMillis);
+    const daysDifference = Math.floor((currentDate - inputDateTime) / oneDayInMillis) + 1;
 
     if (currentDate.toDateString() === inputDateTime.toDateString()) {
         return "today";
-    } else if (daysDifference === 1) {
+    } else if (daysDifference === 0) {
         return "yesterday";
     } else if (daysDifference <= 6) {
         return `${daysDifference} days ago`;
-    } else if (daysDifference <= 13) {
+    } else if (daysDifference == 7) {
         return "1 week ago";
-    } else {
+    } else if(daysDifference > 7){
         const options = { month: 'long', day: 'numeric' };
         return inputDateTime.toLocaleDateString(undefined, options);
     }

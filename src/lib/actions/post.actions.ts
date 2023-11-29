@@ -155,3 +155,12 @@ export async function fetchSinglePost(id:string){
     }
 }
 
+export async function fetchCategoryPosts(category:string){
+    try {
+        connectToDB()
+        const response = await PostModel.find({category : category})
+        return JSON.parse(JSON.stringify(response))
+    } catch (error) {
+        
+    }
+}
