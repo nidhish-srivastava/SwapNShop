@@ -15,16 +15,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Input } from "@/components/ui/input";
-import { usePathname } from "next/navigation";
-import { useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import {  useState } from "react";
+import { filterInput } from "@/lib/utils";
 
 
 export default function NavMenu() {
-  const searchRef = useRef<HTMLInputElement>(null)
+  const [inputValue,setInputValue] = useState("")
   const pathname = usePathname()
+  const router = useRouter()
     let show = pathname.split('/').includes("post")
   const { data: session } = useSession();
   const src = session?.user?.image as string;
+
+  const searchHandler = (e:React.KeyboardEvent)=>{
+    const searchInput = inputValue.match(/[a-zA-Z]+/g)?.join(' ')
+    const convertToProperParam = filterInput(searchInput)
+    if(e.key=="Enter"){
+      console.log(searchInput);
+      router.push(`/search/${convertToProperParam}`)
+    }
+  }
+
 
   return (
     <div className={show ? "hidden" : ""}>
@@ -49,8 +61,12 @@ export default function NavMenu() {
           </DropdownMenu>
         </span>
         <div className=" md:flex md:w-[25%] hidden border  rounded-full py-0 px-2 items-center">
-          <Search />
-          <Input ref={searchRef} className="border-none" type="search" placeholder="Location" />
+          <Search/>
+          <Input
+          onKeyDown={searchHandler}
+          value={inputValue}
+          onChange={(e)=>setInputValue(e.target.value)}
+          className="border-none" type="search" placeholder="Location" />
           <ChevronDown />
         </div>
         <div

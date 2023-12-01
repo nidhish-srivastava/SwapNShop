@@ -1,7 +1,5 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { CarFront,Bike,Smartphone,Home,Laptop2,Armchair,Dog,Book,Shirt } from "lucide-react";
- 
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -18,11 +16,9 @@ export function cn(...inputs: ClassValue[]) {
 //   selected : false
 // },
 
-
-  
-export  const decodeCategoryHandler = (category:string)=>{
-  return decodeURIComponent(category)
-}
+export const filterInput = (searchInput:string | undefined)=>{
+  return searchInput?.split(" ").join("-")
+}  
 
 export const filterUsername = (username : string | null | undefined) =>{
   return username?.split("@")[0]

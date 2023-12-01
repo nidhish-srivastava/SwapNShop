@@ -1,4 +1,5 @@
 import {  commonPropertiesSchema} from "@/lib/actions/post.actions"
+import { filterUsername } from "@/lib/utils";
 import Image from "next/image"
 import Link from "next/link";
 type Props = {
@@ -27,8 +28,8 @@ type Props = {
   }
 function PostCard({postObj} : Props) {
 
-  let modifiedTitle = postObj.title.split(" ").join("-")
-  modifiedTitle = modifiedTitle.replace(/[0-9]+%\s?/g, '');
+  let modifiedTitle = filterUsername(postObj.title)
+  modifiedTitle = modifiedTitle?.replace(/[0-9]+%\s?/g, '');
   return (
     <Link href={`/item/${modifiedTitle}-${postObj._id}`} key={postObj?._id}>
     <div className="customsm:items-center flex flex-col border">

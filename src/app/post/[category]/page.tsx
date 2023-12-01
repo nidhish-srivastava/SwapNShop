@@ -31,7 +31,6 @@ import Loading from "@/components/Loading";
 import { filterUsername } from "@/lib/utils";
 const uploadImage =
   "https://res.cloudinary.com/dvlz73wcr/image/upload/v1700581072/upload_zypu8w.jpg";
-import { decodeCategoryHandler } from "@/lib/utils";  
 
 function page() {
   const params = useParams();
@@ -50,7 +49,7 @@ function page() {
   const [userImg5, setUserImg5] = useState(uploadImage);
   const [showDistrict, setShowDistrict] = useState(false);
   let category = params.category;
-  const decodedCategory = decodeCategoryHandler(category as string);
+  const decodedCategory = decodeURIComponent(category as string);
   const [formData, setFormData] = useState<commonPropertiesSchema>({
     title: "",
     description: "",

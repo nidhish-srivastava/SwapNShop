@@ -189,3 +189,38 @@ export async function sortPostsLowToHigh(category:string){
         
     }
 }
+
+const cleanInput = (input: string) => {
+    return new RegExp(
+      input
+        ?.trim()
+        .replace(/\s{2,}/g, " ")
+        .replace(/,(?!\s)/g, ", ")
+        .toString()
+        .toLowerCase(),
+      "i"
+    );
+  };
+
+export async function searchBasedOnLocation(location:string){
+    try {
+        connectToDB()
+        const decodeLocation = location.split("-").join(" ")
+        const filteredLocation = cleanInput(decodeLocation)
+        // NOw we need to remove the spaces
+        const response = await PostModel.find({
+            $or : [
+                {
+                    'location.district' : filteredLocation,
+                },
+                {
+                    'location.state' : filteredLocation
+                }
+            ]
+            // 'location.state' : location
+        }).sort({createdAt : -1})
+        return plainObjConverter(response)
+    } catch (error) {
+        
+    }
+}
